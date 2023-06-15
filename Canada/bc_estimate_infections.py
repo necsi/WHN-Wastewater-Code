@@ -121,4 +121,4 @@ ww['IH_new_inf_3day'] = (ww['IH_new_inf'].shift(1) + ww['IH_new_inf'] + ww['IH_n
 
 
 # Save 
-ww.to_csv('Canada_BC_estimate_infections.csv')
+ww.to_csv('Canada/BC_estimate_infections.csv')
