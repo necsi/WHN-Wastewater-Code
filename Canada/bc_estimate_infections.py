@@ -72,12 +72,12 @@ ww['Interior_Health_7day'] = (ww['Kamloops_7day'] * p_Kamloops + ww['Kelowna_7da
 
 # Estimate new cases
 # Add billion gc for all health authorities
-ww['VCH'] = ww['Iona'].rolling(window = 7,min_periods=1).mean() + ww['Lion\'s Gate'].rolling(window = 7,min_periods=1).mean() + ww['Lulu'].rolling(window = 7,min_periods=1).mean()
-ww['FH'] = ww['Annacis'].rolling(window = 7,min_periods=1).mean() + ww['Nw. Langley'].rolling(window = 7,min_periods=1).mean()
+ww['VCH'] = ww['Iona'] + ww['Lion\'s Gate'] + ww['Lulu']
+ww['FH'] = ww['Annacis'] + ww['Nw. Langley']
 
-ww['VIHA'] = ww['Victoria'].rolling(window = 7,min_periods=1).mean() + ww['Nanaimo'].rolling(window = 7,min_periods=1).mean() + ww['Comox Valley'].rolling(window = 7,min_periods=1).mean()
+ww['VIHA'] = ww['Victoria'] + ww['Nanaimo'] + ww['Comox Valley']
 
-ww['IH'] = ww['Kamloops'].rolling(window = 7,min_periods=1).mean() + ww['Kelowna'].rolling(window = 7,min_periods=1).mean() + ww['Penticton'].rolling(window = 7,min_periods=1).mean()
+ww['IH'] = ww['Kamloops'] + ww['Kelowna'] + ww['Penticton']
 
 
 # Make list of 14 first entries in gc in billions column of shedding
