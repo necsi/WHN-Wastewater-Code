@@ -103,13 +103,13 @@
 
             // Rename columns
             if (filtered_df.columns.length == 6) {
-                filtered_df.rename({ columns: { 'wastewater': 'Wastewater (million gc/cap/day)', 'inf': 'Estimated Infections', 'official': 'Official Infections' }, inplace: true });
+                filtered_df.rename({ 'wastewater': 'Wastewater (million gc/cap/day)', 'inf': 'Estimated Infections', 'official': 'Official Infections' }, {inplace: true });
             } 
             else if (filtered_df.columns.length == 5) {
-                filtered_df.rename({ columns: { 'wastewater': 'Wastewater (million gc/cap/day)', 'inf': 'Estimated Infections' }, inplace: true });
+                filtered_df.rename({ 'wastewater': 'Wastewater (million gc/cap/day)', 'inf': 'Estimated Infections' }, {inplace: true });
             } 
             else if (filtered_df.columns.length == 4) {
-                filtered_df.rename({ columns: { 'wastewater': 'Wastewater (million gc/cap/day)' }, inplace: true });
+                filtered_df.rename({'wastewater': 'Wastewater (million gc/cap/day)' }, {inplace: true });
             }
 
 
