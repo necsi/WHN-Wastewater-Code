@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="fm.tagator.jquery.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/danfojs@1.1.2/lib/bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.slim.min.js"></script>
+    <script src="fm.tagator.jquery.js"></script>
+    <title>Wastewater_Danfo_Test</title>
+    
+</head>
+<body>
+    <select id="countries"></select>
+    <select id="regions"></select>
+    <input id="measuresInput">
+    <button id="plotButton">Plot</button>
+    <div id="plot_div"></div>
+
+    <script>
+        // Initial settings
+        var countries = ['Finland', 'Canada']; // Add countries when we have more data
+        var regions = ['Helsinki', 'Joensuu', 'Jyväskylä', 'Kuopio', 'Oulu', 'Tampere', 'Turku', 'Vaasa']; // Initial regions shown for Finland
+        var measures = ['wastewater', 'inf', 'official']; // Might need better names for the measures
+        // Populate the dropdowns and the input field with the initial values
+        $("#countries").html(countries.map(country => `<option value="${country}">${country}</option>`).join(""));
+        $("#regions").html(regions.map(region => `<option value="${region}">${region}</option>`).join(""));
+        $('#measuresInput').val(measures.join(","));
+        $('#measuresInput').tagator({
+            autocomplete: measures,
+            useDimmer: true,
+            prefix: 'tagator_',
+            height: 'auto',
+            width: window.innerWidth * 0.8,
+            showAllOptionsOnFocus: false
+        });
+
+        function updateRegionsAndMeasures(df) {
+            var regions = df["Region"].unique().values;
+            var htm = "";
+            for (var o = 0; o < regions.length; o++) {
+                htm += "<option value='" + regions[o] + "'>" + regions[o] + "</option>";
+            }
+            $("#regions").html(htm);
+
+            var measures = df["Measure"].unique().values;
+            $('#measuresInput').tagator('destroy');
+            $('#measuresInput').tagator({
+                autocomplete: measures,
+                name: 'measures',
+                useDimmer: true,
+                prefix: 'tagator_',
+                height: 'auto',
+                width: window.innerWidth * 0.8,
+                showAllOptionsOnFocus: false
+            });
+        }
+
+        function plotData(df) {
+            var selected_region = $('#regions').val();
+            var selected_measures = $('#measuresInput').val().split(",");
+            var layout = {
+                title: 'Time Series',
+                xaxis: { title: 'Date' },
+                yaxis: { title: 'New Infections' },
+                    
+                
+            }
+            let filtered_df = df.query(df["Region"].eq(selected_region).and(df["Measure"].eq(selected_measures[0])));
+            filtered_df.rename({ "Value": selected_measures[0] }, { inplace: true });
+            filtered_df.drop({ columns: ["Measure"] ,  inplace: true });
+            filtered_df.setIndex({column: "Date", inplace: true})
+
+            for (var i = 1; i < selected_measures.length; i++) {
+                // Filter data based on the selected region and measure
+                console.log(selected_region);
+                console.log(selected_measures[i]);
+                var measure_df = df.query(df["Region"].eq(selected_region).and(df["Measure"].eq(selected_measures[i])));
+            
+                measure_df.rename({ "Value": selected_measures[i] }, { inplace: true });
+                measure_df.drop({ columns: ["Measure"] ,  inplace: true });
+                
+                // Check if measure_df is not empty
+                if (measure_df.size > 0) {
+                    console.log(measure_df);
+                    measure_df.setIndex({column: "Date", inplace: true})
+
+                    filtered_df = dfd.merge({ left: filtered_df, right: measure_df, on: ["Country", "Region", "Date"], how: "outer" });
+
+                }
+                //measure_df.setIndex({column: "Date", inplace: true})
+                //console.log(measure_df);
+                //console.log(filtered_df);
+
+                //filtered_df = dfd.merge({ left: filtered_df, right: measure_df, on: ["Country", "Region", "Date"], how: "outer" });
+
+                //filtered_df = dfd.concat({ dfList: [filtered_df, measure_df], axis: 1 });
+                //console.log(filtered_df);
+                
+            }
+            // Plot data
+            filtered_df.setIndex({column: "Date", inplace: true})
+            var test = filtered_df.columns.length;
+            console.log(test);
+            if (filtered_df.columns.length == 6) {
+                var config = { columns: ['wastewater','inf','official'] };
+            } if (filtered_df.columns.length == 5) {
+                var config = { columns: ['wastewater','inf'] };
+            } if (filtered_df.columns.length == 4) {
+                var config = { columns: ['wastewater'] };
+            }   
+            filtered_df.plot("plot_div").line({ config, layout });
+        }
+
+        function loadData() {
+            // Load data from csv files
+            dfd.readCSV("./" + $("#countries").val()+"_cleaned.csv")
+            .then(df => {
+                updateRegionsAndMeasures(df);
+                plotData(df);
+            }).catch(err => {
+                console.log(err);
+            })
+        }
+
+        loadData();
+        $("#countries").on("change", function () {
+            loadData();
+        });
+        
+        // Add an event listener to the regions dropdown and measuresInput field
+        $("#regions, #measuresInput").on("change", function() {
+            dfd.readCSV("./" + $("#countries").val()+"_cleaned.csv")
+            .then(df => {
+                plotData(df);
+            }).catch(err => {
+                console.log(err);
+            });
+        });
+
+    </script>
+</body>
+</html>
