@@ -100,17 +100,25 @@
             }
             // Plot data
             filtered_df.setIndex({column: "Date", inplace: true})
-            var test = filtered_df.columns.length;
-            console.log(test);
+
+            // Rename columns
             if (filtered_df.columns.length == 6) {
-                var config = { columns: ['wastewater','inf','official'],
-                             labels: ['Wastewater (million gc/cap/day)','Estimated Infections','Official Infections']};
+                filtered_df.rename({ columns: { 'wastewater': 'Wastewater (million gc/cap/day)', 'inf': 'Estimated Infections', 'official': 'Official Infections' }, inplace: true });
+            } 
+            else if (filtered_df.columns.length == 5) {
+                filtered_df.rename({ columns: { 'wastewater': 'Wastewater (million gc/cap/day)', 'inf': 'Estimated Infections' }, inplace: true });
+            } 
+            else if (filtered_df.columns.length == 4) {
+                filtered_df.rename({ columns: { 'wastewater': 'Wastewater (million gc/cap/day)' }, inplace: true });
+            }
+
+
+            if (filtered_df.columns.length == 6) {
+                var config = { columns: ['Wastewater (million gc/cap/day)','Estimated Infections','Official Infections']};
             } if (filtered_df.columns.length == 5) {
-                var config = { columns: ['wastewater','inf'],
-                              labels: ['Wastewater (million gc/cap/day)','Estimated Infections']};
+                var config = { columns: ['Wastewater (million gc/cap/day)','Estimated Infections']};
             } if (filtered_df.columns.length == 4) {
-                var config = { columns: ['wastewater'],
-                             labels: ['Wastewater (million gc/cap/day)']};
+                var config = { columns: ['Wastewater (million gc/cap/day)']};
             }   
             filtered_df.plot("plot_div").line({ config, layout });
         }
