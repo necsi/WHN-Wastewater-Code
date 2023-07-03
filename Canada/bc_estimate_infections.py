@@ -122,3 +122,39 @@ ww['IH_new_inf_3day'] = (ww['IH_new_inf'].shift(1) + ww['IH_new_inf'] + ww['IH_n
 
 # Save 
 ww.to_csv('Canada/BC_estimate_infections.csv')
+
+# Restructure for danfo.js
+df = ww.copy()
+
+df['MetroVancouver_inf'] = df['VCH_new_inf_3day'] + df['FH_new_inf_3day']
+
+# Get new index
+df = df.reset_index()
+
+# Select the columns we need
+df = df[['Date', 'Metro_Vancouver_7day', 'Island_Health_7day', 'Interior_Health_7day', 'MetroVancouver_inf', 'VIHA_new_inf_3day', 'IH_new_inf_3day']]
+
+# Rename the columns
+df.columns = ['Date', 'MetroVancouver_wastewater', 'IslandHealth_wastewater', 'InteriorHealth_wastewater', 'MetroVancouver_inf', 'IslandHealth_inf', 'InteriorHealth_inf']
+
+# "Melt" the data so each row is a unique date-region combination
+df_melted = df.melt(id_vars='Date', var_name='Region_and_Measure', value_name='Value')
+
+# Separate the Region_and_Measure column into separate 'Region' and 'Measure' columns
+df_melted[['Region', 'Measure']] = df_melted['Region_and_Measure'].str.split('_', expand=True, n=1)
+
+# Drop the now redundant 'Region_and_Measure' column
+df_melted = df_melted.drop(columns='Region_and_Measure')
+
+# To make data uniform across different files, add a 'Country' column
+df_melted['Country'] = 'Canada'
+
+# Reorder the columns
+df_melted = df_melted[['Country', 'Region', 'Date', 'Measure', 'Value']]
+
+# Remove all entries after today
+import datetime
+today = pd.Timestamp(datetime.date.today())
+df_melted['Date'] = pd.to_datetime(df_melted['Date'])
+df_melted = df_melted[df_melted['Date'] <= today]
+df_melted.to_csv('Canada_cleaned.csv', index=False)
