@@ -415,6 +415,7 @@ Canada,MetroVancouver,2023-07-03,wastewater,34.098645076007934
 Canada,MetroVancouver,2023-07-04,wastewater,34.098645076007934
 Canada,MetroVancouver,2023-07-05,wastewater,34.098645076007934
 Canada,MetroVancouver,2023-07-06,wastewater,34.098645076007934
+Canada,MetroVancouver,2023-07-07,wastewater,34.098645076007934
 Canada,IslandHealth,2022-05-17,wastewater,
 Canada,IslandHealth,2022-05-18,wastewater,
 Canada,IslandHealth,2022-05-19,wastewater,
@@ -831,6 +832,7 @@ Canada,IslandHealth,2023-07-03,wastewater,23.29431293013486
 Canada,IslandHealth,2023-07-04,wastewater,23.29431293013486
 Canada,IslandHealth,2023-07-05,wastewater,23.29431293013486
 Canada,IslandHealth,2023-07-06,wastewater,23.29431293013486
+Canada,IslandHealth,2023-07-07,wastewater,23.29431293013486
 Canada,InteriorHealth,2022-05-17,wastewater,
 Canada,InteriorHealth,2022-05-18,wastewater,
 Canada,InteriorHealth,2022-05-19,wastewater,
@@ -1247,6 +1249,7 @@ Canada,InteriorHealth,2023-07-03,wastewater,7.658536585365853
 Canada,InteriorHealth,2023-07-04,wastewater,7.658536585365853
 Canada,InteriorHealth,2023-07-05,wastewater,7.658536585365853
 Canada,InteriorHealth,2023-07-06,wastewater,7.658536585365853
+Canada,InteriorHealth,2023-07-07,wastewater,7.658536585365853
 Canada,MetroVancouver,2022-05-17,inf,
 Canada,MetroVancouver,2022-05-18,inf,0.0
 Canada,MetroVancouver,2022-05-19,inf,0.0
@@ -1663,6 +1666,7 @@ Canada,MetroVancouver,2023-07-03,inf,591.9094850052103
 Canada,MetroVancouver,2023-07-04,inf,591.9092181697625
 Canada,MetroVancouver,2023-07-05,inf,591.9101638873267
 Canada,MetroVancouver,2023-07-06,inf,591.9116449998451
+Canada,MetroVancouver,2023-07-07,inf,591.9137419220976
 Canada,IslandHealth,2022-05-17,inf,
 Canada,IslandHealth,2022-05-18,inf,0.0
 Canada,IslandHealth,2022-05-19,inf,0.0
@@ -2079,6 +2083,7 @@ Canada,IslandHealth,2023-07-03,inf,109.91524232416391
 Canada,IslandHealth,2023-07-04,inf,109.91540711116124
 Canada,IslandHealth,2023-07-05,inf,109.91564729988947
 Canada,IslandHealth,2023-07-06,inf,109.91571202762862
+Canada,IslandHealth,2023-07-07,inf,109.91567114111615
 Canada,InteriorHealth,2022-05-17,inf,
 Canada,InteriorHealth,2022-05-18,inf,0.0
 Canada,InteriorHealth,2022-05-19,inf,0.0
@@ -2495,3 +2500,4 @@ Canada,InteriorHealth,2023-07-03,inf,34.21144705865038
 Canada,InteriorHealth,2023-07-04,inf,34.21138007644777
 Canada,InteriorHealth,2023-07-05,inf,34.21130659112482
 Canada,InteriorHealth,2023-07-06,inf,34.21131749239502
+Canada,InteriorHealth,2023-07-07,inf,34.21131538993757
