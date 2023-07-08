@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/danfojs@1.1.2/lib/bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.slim.min.js"></script>
     <script src="fm.tagator.jquery.js"></script>
-    <title>Wastewater_Danfo_Test</title>
+    <title>Estimated Infections from Wastewater</title>
     
 </head>
 <body>
@@ -19,7 +19,7 @@
 
     <script>
         // Initial settings
-        var countries = ['Finland', 'Canada']; // Add countries when we have more data
+        var countries = ['Finland', 'Canada','Netherlands']; // Add countries when we have more data
         var regions = ['Helsinki', 'Joensuu', 'Jyväskylä', 'Kuopio', 'Oulu', 'Tampere', 'Turku', 'Vaasa']; // Initial regions shown for Finland
         var measures = ['wastewater', 'inf', 'official']; // Might need better names for the measures
         // Populate the dropdowns and the input field with the initial values
@@ -60,7 +60,7 @@
             var selected_region = $('#regions').val();
             var selected_measures = $('#measuresInput').val().split(",");
             var layout = {
-                title: 'Time Series',
+                title: 'Wastewater / Estimated infections in ' + selected_region, 
                 xaxis: { title: 'Date' },
                 yaxis: { title: 'Count' },
                     
@@ -104,22 +104,49 @@
             // Rename columns
             if (filtered_df.columns.length == 6) {
                 filtered_df.rename({ 'wastewater': 'Wastewater (million gc/cap/day)', 'inf': 'Estimated Infections', 'official': 'Official Infections' }, {inplace: true });
+                var config = { columns: ['Wastewater (million gc/cap/day)','Estimated Infections','Official Infections']};
             } 
             else if (filtered_df.columns.length == 5) {
-                filtered_df.rename({ 'wastewater': 'Wastewater (million gc/cap/day)', 'inf': 'Estimated Infections' }, {inplace: true });
+                // Check if columns contain "inf" and "official" and rename them if they do
+                if (filtered_df.columns.includes("inf") && filtered_df.columns.includes("official")) {
+                    filtered_df.rename({ 'inf': 'Estimated Infections', 'official': 'Official Infections' }, {inplace: true });
+                    var config = { columns: ['Estimated Infections','Official Infections']};
+                }
+                // Check if columns contain "wastewater" and "inf" and rename them if they do
+                else if (filtered_df.columns.includes("wastewater") && filtered_df.columns.includes("inf")) {
+                    filtered_df.rename({ 'wastewater': 'Wastewater (million gc/cap/day)', 'inf': 'Estimated Infections' }, {inplace: true });
+                    var config = { columns: ['Wastewater (million gc/cap/day)','Estimated Infections']};
+                }
+                // Check if columns contain "wastewater" and "official" and rename them if they do
+                else if (filtered_df.columns.includes("wastewater") && filtered_df.columns.includes("official")) {
+                    filtered_df.rename({ 'wastewater': 'Wastewater (million gc/cap/day)', 'official': 'Official Infections' }, {inplace: true });
+                    var config = { columns: ['Wastewater (million gc/cap/day)','Official Infections']};
+                }
+
+
+                //filtered_df.rename({ 'wastewater': 'Wastewater (million gc/cap/day)', 'inf': 'Estimated Infections' }, {inplace: true });
             } 
             else if (filtered_df.columns.length == 4) {
-                filtered_df.rename({'wastewater': 'Wastewater (million gc/cap/day)' }, {inplace: true });
+                // Check if columns contain "wastewater" and rename them if they do
+                if (filtered_df.columns.includes("wastewater")) {
+                    filtered_df.rename({ 'wastewater': 'Wastewater (million gc/cap/day)' }, {inplace: true });
+                    var config = { columns: ['Wastewater (million gc/cap/day)']};
+                }
+                // Check if columns contain "inf" and rename them if they do
+                else if (filtered_df.columns.includes("inf")) {
+                    filtered_df.rename({ 'inf': 'Estimated Infections' }, {inplace: true });
+                    var config = { columns: ['Estimated Infections']};
+                }
+                // Check if columns contain "official" and rename them if they do
+                else if (filtered_df.columns.includes("official")) {
+                    filtered_df.rename({ 'official': 'Official Infections' }, {inplace: true });
+                    var config = { columns: ['Official Infections']};
+                }
+                // filtered_df.rename({'wastewater': 'Wastewater (million gc/cap/day)' }, {inplace: true });
             }
 
 
-            if (filtered_df.columns.length == 6) {
-                var config = { columns: ['Wastewater (million gc/cap/day)','Estimated Infections','Official Infections']};
-            } if (filtered_df.columns.length == 5) {
-                var config = { columns: ['Wastewater (million gc/cap/day)','Estimated Infections']};
-            } if (filtered_df.columns.length == 4) {
-                var config = { columns: ['Wastewater (million gc/cap/day)']};
-            }   
+               
             filtered_df.plot("plot_div").line({ config, layout });
         }
 
