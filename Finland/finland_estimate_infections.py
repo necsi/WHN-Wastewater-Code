@@ -216,3 +216,5 @@ cleaned = pd.concat([df_melted, df2_melted], axis=0)
 
 cleaned.to_csv('Finland_cleaned.csv', index=False)
 
+# Json
+cleaned.to_json('Finland_cleaned.json', orient='records')

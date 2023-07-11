@@ -158,3 +158,6 @@ today = pd.Timestamp(datetime.date.today())
 df_melted['Date'] = pd.to_datetime(df_melted['Date'])
 df_melted = df_melted[df_melted['Date'] <= today]
 df_melted.to_csv('Canada_cleaned.csv', index=False)
+
+# Json
+df_melted.to_json('Canada_cleaned.json', orient='records')
