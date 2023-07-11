@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="fm.tagator.jquery.css"/>
     <script src="https://cdn.jsdelivr.net/npm/danfojs@1.1.2/lib/bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+
     <script src="fm.tagator.jquery.js"></script>
     <title>Estimated Infections from Wastewater</title>
     
@@ -15,13 +21,18 @@
     <select id="regions"></select>
     <input id="measuresInput">
     <button id="plotButton">Plot</button>
-    <div id="plot_div"></div>
+    <div style="max-width: 1600px; margin: 0 auto;">
+        <canvas id="plot_div"></canvas>
+    </div>
+    
+    <button onclick="resetZoom()">Reset Zoom</button>
 
     <script>
         // Initial settings
-        var countries = ['Finland', 'Canada','Netherlands']; // Add countries when we have more data
+        var countries = ['Finland', 'Canada', 'Netherlands']; // Add countries when we have more data
         var regions = ['Helsinki', 'Joensuu', 'Jyväskylä', 'Kuopio', 'Oulu', 'Tampere', 'Turku', 'Vaasa']; // Initial regions shown for Finland
         var measures = ['wastewater', 'inf', 'official']; // Might need better names for the measures
+
         // Populate the dropdowns and the input field with the initial values
         $("#countries").html(countries.map(country => `<option value="${country}">${country}</option>`).join(""));
         $("#regions").html(regions.map(region => `<option value="${region}">${region}</option>`).join(""));
@@ -35,19 +46,133 @@
             showAllOptionsOnFocus: false
         });
 
-        function updateRegionsAndMeasures(df) {
-            var regions = df["Region"].unique().values;
-            var htm = "";
-            for (var o = 0; o < regions.length; o++) {
-                htm += "<option value='" + regions[o] + "'>" + regions[o] + "</option>";
-            }
-            $("#regions").html(htm);
+        var canvas = document.getElementsByTagName('canvas')[0];
+        var ctx = canvas.getContext('2d');
 
-            var measures = df["Measure"].unique().values;
-            $('#measuresInput').tagator('destroy');
+        var chartColors = {
+            red: 'rgb(255, 99, 132)',
+            orange: 'rgb(255, 159, 64)',
+            yellow: 'rgb(255, 205, 86)',
+            green: 'rgb(75, 192, 192)',
+            blue: 'rgb(54, 162, 235)',
+            purple: 'rgb(153, 102, 255)',
+            grey: 'rgb(201, 203, 207)'
+        };
+
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: []
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Wastewater / Estimated infections'
+                },
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'day'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Wastewater (million gc/capita/day)'
+                        }
+                    },
+                    y1: {
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: 'New Infections'
+                        }
+                    }
+                },
+                plugins: {
+                    zoom: {
+                        zoom: {
+                            drag: {
+                                enabled: true
+                            },
+                            wheel: {
+                                enabled: true,
+                            },
+                            pinch: {
+                                enabled: true
+                            },
+                            mode: 'x',
+                        }
+                    }
+                }
+            }
+        });
+
+
+        function resetZoom() {
+            chart.resetZoom();
+        }
+
+        function updateData() {
+            var selected_country = $('#countries').val();
+            var selected_region = $('#regions').val();
+            var selected_measures = $('#measuresInput').val().split(",");
+
+            // Fetch data from JSON file (replace with actual data source)
+            fetch(`./${selected_country}_cleaned.json`)
+                .then(response => response.json())
+                .then(data => {
+                    chart.data.labels = [];
+                    chart.data.datasets = [];
+
+                    selected_measures.forEach((measure, index) => {
+                        let filteredData = data.filter(item => item.Region === selected_region && item.Measure === measure);
+                        let timeData = filteredData.map(item => item.Date);
+                        let valueData = filteredData.map(item => item.Value);
+                        let label;
+                        switch (measure) {
+                            case 'wastewater':
+                                label = 'Wastewater';
+                                break;
+                            case 'inf':
+                                label = 'Estimated infections';
+                                break;
+                            case 'official':
+                                label = 'Official infections (if available)';
+                                break;
+                        }
+
+                        chart.data.labels = [...new Set([...chart.data.labels, ...timeData])].sort();
+                        chart.data.datasets.push({
+                            label: label,
+                            data: valueData,
+                            borderColor: index < 7 ? chartColors[index] : getRandomColor(), // pick color from pre-defined palette or generate random color
+                            fill: false,
+                            yAxisID: measure === 'wastewater' ? 'y' : 'y1'
+                        });
+                    });
+
+                    chart.options.title.text = 'Wastewater / Estimated infections in ' + selected_region;
+                    chart.update();
+                });
+        }
+
+        function updateRegionsAndMeasures(data) {
+            let regions = [...new Set(data.map(item => item.Region))];
+            $("#regions").html(regions.map(region => `<option value="${region}">${region}</option>`).join(""));
+
+            let measures = [...new Set(data.map(item => item.Measure))];
+            //$('#measuresInput').tagator('destroy');
+            measures = measures.filter(measure => measure != null);
             $('#measuresInput').tagator({
                 autocomplete: measures,
-                name: 'measures',
                 useDimmer: true,
                 prefix: 'tagator_',
                 height: 'auto',
@@ -56,126 +181,29 @@
             });
         }
 
-        function plotData(df) {
-            var selected_region = $('#regions').val();
-            var selected_measures = $('#measuresInput').val().split(",");
-            var layout = {
-                title: 'Wastewater / Estimated infections in ' + selected_region, 
-                xaxis: { title: 'Date' },
-                yaxis: { title: 'Count' },
-                    
-                
-            }
-            let filtered_df = df.query(df["Region"].eq(selected_region).and(df["Measure"].eq(selected_measures[0])));
-            filtered_df.rename({ "Value": selected_measures[0] }, { inplace: true });
-            filtered_df.drop({ columns: ["Measure"] ,  inplace: true });
-            filtered_df.setIndex({column: "Date", inplace: true})
-
-            for (var i = 1; i < selected_measures.length; i++) {
-                // Filter data based on the selected region and measure
-                console.log(selected_region);
-                console.log(selected_measures[i]);
-                var measure_df = df.query(df["Region"].eq(selected_region).and(df["Measure"].eq(selected_measures[i])));
-            
-                measure_df.rename({ "Value": selected_measures[i] }, { inplace: true });
-                measure_df.drop({ columns: ["Measure"] ,  inplace: true });
-                
-                // Check if measure_df is not empty
-                if (measure_df.size > 0) {
-                    console.log(measure_df);
-                    measure_df.setIndex({column: "Date", inplace: true})
-
-                    filtered_df = dfd.merge({ left: filtered_df, right: measure_df, on: ["Country", "Region", "Date"], how: "outer" });
-
-                }
-                //measure_df.setIndex({column: "Date", inplace: true})
-                //console.log(measure_df);
-                //console.log(filtered_df);
-
-                //filtered_df = dfd.merge({ left: filtered_df, right: measure_df, on: ["Country", "Region", "Date"], how: "outer" });
-
-                //filtered_df = dfd.concat({ dfList: [filtered_df, measure_df], axis: 1 });
-                //console.log(filtered_df);
-                
-            }
-            // Plot data
-            filtered_df.setIndex({column: "Date", inplace: true})
-
-            // Rename columns
-            if (filtered_df.columns.length == 6) {
-                filtered_df.rename({ 'wastewater': 'Wastewater (million gc/cap/day)', 'inf': 'Estimated Infections', 'official': 'Official Infections' }, {inplace: true });
-                var config = { columns: ['Wastewater (million gc/cap/day)','Estimated Infections','Official Infections']};
-            } 
-            else if (filtered_df.columns.length == 5) {
-                // Check if columns contain "inf" and "official" and rename them if they do
-                if (filtered_df.columns.includes("inf") && filtered_df.columns.includes("official")) {
-                    filtered_df.rename({ 'inf': 'Estimated Infections', 'official': 'Official Infections' }, {inplace: true });
-                    var config = { columns: ['Estimated Infections','Official Infections']};
-                }
-                // Check if columns contain "wastewater" and "inf" and rename them if they do
-                else if (filtered_df.columns.includes("wastewater") && filtered_df.columns.includes("inf")) {
-                    filtered_df.rename({ 'wastewater': 'Wastewater (million gc/cap/day)', 'inf': 'Estimated Infections' }, {inplace: true });
-                    var config = { columns: ['Wastewater (million gc/cap/day)','Estimated Infections']};
-                }
-                // Check if columns contain "wastewater" and "official" and rename them if they do
-                else if (filtered_df.columns.includes("wastewater") && filtered_df.columns.includes("official")) {
-                    filtered_df.rename({ 'wastewater': 'Wastewater (million gc/cap/day)', 'official': 'Official Infections' }, {inplace: true });
-                    var config = { columns: ['Wastewater (million gc/cap/day)','Official Infections']};
-                }
-
-
-                //filtered_df.rename({ 'wastewater': 'Wastewater (million gc/cap/day)', 'inf': 'Estimated Infections' }, {inplace: true });
-            } 
-            else if (filtered_df.columns.length == 4) {
-                // Check if columns contain "wastewater" and rename them if they do
-                if (filtered_df.columns.includes("wastewater")) {
-                    filtered_df.rename({ 'wastewater': 'Wastewater (million gc/cap/day)' }, {inplace: true });
-                    var config = { columns: ['Wastewater (million gc/cap/day)']};
-                }
-                // Check if columns contain "inf" and rename them if they do
-                else if (filtered_df.columns.includes("inf")) {
-                    filtered_df.rename({ 'inf': 'Estimated Infections' }, {inplace: true });
-                    var config = { columns: ['Estimated Infections']};
-                }
-                // Check if columns contain "official" and rename them if they do
-                else if (filtered_df.columns.includes("official")) {
-                    filtered_df.rename({ 'official': 'Official Infections' }, {inplace: true });
-                    var config = { columns: ['Official Infections']};
-                }
-                // filtered_df.rename({'wastewater': 'Wastewater (million gc/cap/day)' }, {inplace: true });
-            }
-
-
-               
-            filtered_df.plot("plot_div").line({ config, layout });
-        }
-
         function loadData() {
-            // Load data from csv files
-            dfd.readCSV("./" + $("#countries").val()+"_cleaned.csv")
-            .then(df => {
-                updateRegionsAndMeasures(df);
-                plotData(df);
-            }).catch(err => {
-                console.log(err);
-            })
-        }
-
-        loadData();
-        $("#countries").on("change", function () {
-            loadData();
-        });
-        
-        // Add an event listener to the regions dropdown and measuresInput field
-        $("#regions, #measuresInput").on("change", function() {
-            dfd.readCSV("./" + $("#countries").val()+"_cleaned.csv")
-            .then(df => {
-                plotData(df);
+            fetch(`./${$("#countries").val()}_cleaned.json`)
+            .then(response => response.json())
+            .then(data => {
+                updateRegionsAndMeasures(data);
+                updateData();
             }).catch(err => {
                 console.log(err);
             });
+        }
+
+        loadData();
+
+        $("#countries").on("change", function() {
+            loadData();
         });
 
+        //updateData();
+        $("#countries, #regions, #measuresInput").on("change", function() {
+            updateData();
+        });
     </script>
+
 </body>
+
 </html>
