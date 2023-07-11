@@ -109,5 +109,9 @@ df_melted['Country'] = 'Netherlands'
 # Reorder the columns
 df_melted = df_melted[['Country', 'Region', 'Date', 'Measure', 'Value']]
 
-# New CSV if you want:
+# CSV:
 df_melted.to_csv('Netherlands_cleaned.csv', index=False)
+
+# Json
+df_melted.to_json('Netherlands_cleaned.json', orient='records')
+
