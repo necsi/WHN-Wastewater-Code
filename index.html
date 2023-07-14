@@ -3,207 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="fm.tagator.jquery.css"/>
-    <script src="https://cdn.jsdelivr.net/npm/danfojs@1.1.2/lib/bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.1"></script>
-    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
-
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.2/echarts.min.js"></script>
     <script src="fm.tagator.jquery.js"></script>
     <title>Estimated Infections from Wastewater</title>
-    
 </head>
 <body>
-    <select id="countries"></select>
-    <select id="regions"></select>
-    <input id="measuresInput">
-    <button id="plotButton">Plot</button>
-    <div style="max-width: 1600px; margin: 0 auto;">
-        <canvas id="plot_div"></canvas>
-    </div>
-    
-    <button onclick="resetZoom()">Reset Zoom</button>
+  <select id="countries"></select>
+  <select id="regions"></select>
+  <style>
+    #main,
+    html,
+    body {
+      width: 100%;
+    }
+    #main {
+      height: 400px;
+    }
+  </style>
+  <div id="main"></div>
+  
+  <script>
+      var countries = ['Finland', 'Canada', 'Netherlands'];
+      var regions = ['Helsinki', 'Joensuu', 'Jyväskylä', 'Kuopio', 'Oulu', 'Tampere', 'Turku', 'Vaasa'];
+      var measures = ['wastewater', 'inf', 'official'];
 
-    <script>
-        // Initial settings
-        var countries = ['Finland', 'Canada', 'Netherlands']; // Add countries when we have more data
-        var regions = ['Helsinki', 'Joensuu', 'Jyväskylä', 'Kuopio', 'Oulu', 'Tampere', 'Turku', 'Vaasa']; // Initial regions shown for Finland
-        var measures = ['wastewater', 'inf', 'official']; // Might need better names for the measures
+      $("#countries").html(countries.map(country => `<option value="${country}">${country}</option>`).join(""));
+      $("#regions").html(regions.map(region => `<option value="${region}">${region}</option>`).join(""));
+     
+      var chartDom = document.getElementById('main');
+      var myChart = echarts.init(chartDom);
+      window.addEventListener('resize', function() {
+        myChart.resize();
+      });
+      
+      function updateData() {
+          var selected_country = $('#countries').val();
+          var selected_region = $('#regions').val();
+          var selected_measures = measures;
 
-        // Populate the dropdowns and the input field with the initial values
-        $("#countries").html(countries.map(country => `<option value="${country}">${country}</option>`).join(""));
-        $("#regions").html(regions.map(region => `<option value="${region}">${region}</option>`).join(""));
-        $('#measuresInput').val(measures.join(","));
-        $('#measuresInput').tagator({
-            autocomplete: measures,
-            useDimmer: true,
-            prefix: 'tagator_',
-            height: 'auto',
-            width: window.innerWidth * 0.8,
-            showAllOptionsOnFocus: false
-        });
+          fetch(`./${selected_country}_cleaned.json`)
+              .then(response => response.json())
+              .then(data => {
+                  var series = [];
+                  var labels = [];
+                  var dataValue = [];
+                  selected_measures.forEach((measure, index) => {
+                      let filteredData = data.filter(item => item.Region === selected_region && item.Measure === measure);
+                      let timeData = filteredData.map(item => item.Date);
+                      let valueData = filteredData.map(item => item.Value);
+                      let label;
+                      let yAxisIndex;
+                      switch (measure) {
+                          case 'wastewater':
+                              label = 'Wastewater';
+                              yAxisIndex = 1;
+                              break;
+                          case 'inf':
+                              label = 'Estimated infections';
+                              yAxisIndex = 0;
+                              break;
+                          case 'official':
+                              label = 'Official infections (if available)';
+                              yAxisIndex = 0;
+                              break;
+                      }
+                      labels = [...new Set([...labels, ...timeData])].sort();
+                      series.push({
+                          name: label,
+                          type: 'line',
+                          data: valueData,
+                          yAxisIndex: yAxisIndex,
+                          showSymbol: false
+                      });
+                  });
 
-        var canvas = document.getElementsByTagName('canvas')[0];
-        var ctx = canvas.getContext('2d');
-
-        var chartColors = {
-            red: 'rgb(255, 99, 132)',
-            orange: 'rgb(255, 159, 64)',
-            yellow: 'rgb(255, 205, 86)',
-            green: 'rgb(75, 192, 192)',
-            blue: 'rgb(54, 162, 235)',
-            purple: 'rgb(153, 102, 255)',
-            grey: 'rgb(201, 203, 207)'
-        };
-
-        var chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: [],
-                datasets: []
-            },
-            options: {
-                responsive: true,
-                title: {
-                    display: true,
-                    text: 'Wastewater / Estimated infections'
-                },
-                scales: {
-                    x: {
-                        type: 'time',
-                        time: {
-                            unit: 'day'
-                        },
-                        title: {
-                            display: true,
-                            text: 'Date'
+                  myChart.setOption({
+                      tooltip: {
+                          trigger: 'axis'
+                      },
+                      legend: {
+                      },
+                      toolbox: {
+                        show: true,
+                        feature: {
+                          dataZoom: {
+                            yAxisIndex: 'none'
+                          },
+                          dataView: { readOnly: false },
+                          magicType: { type: ['line', 'bar'] },
+                          restore: {},
+                          saveAsImage: {}
                         }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Wastewater (million gc/capita/day)'
-                        }
-                    },
-                    y1: {
-                        position: 'right',
-                        title: {
-                            display: true,
-                            text: 'New Infections'
-                        }
-                    }
-                },
-                plugins: {
-                    zoom: {
-                        zoom: {
-                            drag: {
-                                enabled: true
-                            },
-                            wheel: {
-                                enabled: true,
-                            },
-                            pinch: {
-                                enabled: true
-                            },
-                            mode: 'x',
-                        }
-                    }
-                }
-            }
-        });
+                      },
+                      xAxis: {
+                          type: 'category',
+                          data: labels
+                      },
+                      yAxis: [{
+                          type: 'value',
+                          name: 'New Infections'
+                      }, {
+                          type: 'value',
+                          name: 'Wastewater (in million gc/capita/day)'
+                      }],
+                      series: series
+                  });
+                  
+              });
+      }
 
+      function updateRegionsAndMeasures(data) {
+          let regions = [...new Set(data.map(item => item.Region))];
+          $("#regions").html(regions.map(region => `<option value="${region}">${region}</option>`).join(""));
 
-        function resetZoom() {
-            chart.resetZoom();
-        }
+          let measures = [...new Set(data.map(item => item.Measure))];
+          measures = measures.filter(measure => measure != null);
+         
+      }
 
-        function updateData() {
-            var selected_country = $('#countries').val();
-            var selected_region = $('#regions').val();
-            var selected_measures = $('#measuresInput').val().split(",");
+      function loadData() {
+          fetch(`./${$("#countries").val()}_cleaned.json`)
+          .then(response => response.json())
+          .then(data => {
+              updateRegionsAndMeasures(data);
+              updateData();
+          }).catch(err => {
+              console.log(err);
+          });
+      }
 
-            // Fetch data from JSON file (replace with actual data source)
-            fetch(`./${selected_country}_cleaned.json`)
-                .then(response => response.json())
-                .then(data => {
-                    chart.data.labels = [];
-                    chart.data.datasets = [];
+      loadData();
 
-                    selected_measures.forEach((measure, index) => {
-                        let filteredData = data.filter(item => item.Region === selected_region && item.Measure === measure);
-                        let timeData = filteredData.map(item => item.Date);
-                        let valueData = filteredData.map(item => item.Value);
-                        let label;
-                        switch (measure) {
-                            case 'wastewater':
-                                label = 'Wastewater';
-                                break;
-                            case 'inf':
-                                label = 'Estimated infections';
-                                break;
-                            case 'official':
-                                label = 'Official infections (if available)';
-                                break;
-                        }
+      $("#countries").on("change", function() {
+          loadData();
+      });
 
-                        chart.data.labels = [...new Set([...chart.data.labels, ...timeData])].sort();
-                        chart.data.datasets.push({
-                            label: label,
-                            data: valueData,
-                            borderColor: index < 7 ? chartColors[index] : getRandomColor(), // pick color from pre-defined palette or generate random color
-                            fill: false,
-                            yAxisID: measure === 'wastewater' ? 'y' : 'y1'
-                        });
-                    });
-
-                    chart.options.title.text = 'Wastewater / Estimated infections in ' + selected_region;
-                    chart.update();
-                });
-        }
-
-        function updateRegionsAndMeasures(data) {
-            let regions = [...new Set(data.map(item => item.Region))];
-            $("#regions").html(regions.map(region => `<option value="${region}">${region}</option>`).join(""));
-
-            let measures = [...new Set(data.map(item => item.Measure))];
-            //$('#measuresInput').tagator('destroy');
-            measures = measures.filter(measure => measure != null);
-            $('#measuresInput').tagator({
-                autocomplete: measures,
-                useDimmer: true,
-                prefix: 'tagator_',
-                height: 'auto',
-                width: window.innerWidth * 0.8,
-                showAllOptionsOnFocus: false
-            });
-        }
-
-        function loadData() {
-            fetch(`./${$("#countries").val()}_cleaned.json`)
-            .then(response => response.json())
-            .then(data => {
-                updateRegionsAndMeasures(data);
-                updateData();
-            }).catch(err => {
-                console.log(err);
-            });
-        }
-
-        loadData();
-
-        $("#countries").on("change", function() {
-            loadData();
-        });
-
-        //updateData();
-        $("#countries, #regions, #measuresInput").on("change", function() {
-            updateData();
-        });
-    </script>
+      $("#countries, #regions, #measuresInput").on("change", function() {
+          updateData();
+      });
+  </script>
 
 </body>
-
 </html>
+
