@@ -47,6 +47,7 @@
               .then(data => {
                   var series = [];
                   var labels = [];
+                  var legends = [];
                   var dataValue = [];
                   selected_measures.forEach((measure, index) => {
                       let filteredData = data.filter(item => item.Region === selected_region && item.Measure === measure);
@@ -68,18 +69,21 @@
                               yAxisIndex = 0;
                               break;
                           case 'official':
-                              label = 'Official infections (if available)';
+                              label = 'Official infections';
                               yAxisIndex = 0;
                               break;
                       }
                       labels = [...new Set([...labels, ...timeData])].sort();
-                      series.push({
-                          name: label,
-                          type: 'line',
-                          data: valueData,
-                          yAxisIndex: yAxisIndex,
-                          showSymbol: false
-                      });
+                      if (valueData.length > 0) {
+                        series.push({
+                            name: label,
+                            type: 'line',
+                            data: valueData,
+                            yAxisIndex: yAxisIndex,
+                            showSymbol: false
+                        });
+                        legends.push(label);
+                      }
                   });
 
                   myChart.setOption({
@@ -87,6 +91,7 @@
                           trigger: 'axis'
                       },
                       legend: {
+                            data: legends
                       },
                       toolbox: {
                         show: true,
@@ -112,7 +117,7 @@
                           name: 'Wastewater (in million gc/capita/day)'
                       }],
                       series: series
-                  });
+                  }, true);
                   
               });
       }
