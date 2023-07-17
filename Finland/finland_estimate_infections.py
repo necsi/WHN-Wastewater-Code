@@ -150,6 +150,9 @@ for i in range(len(estim_cases.columns)):
         if np.isnan(estim_cases.iloc[j,i]):
             estim_cases.iloc[j,i] = estim_cases.iloc[j+1,i]
 
+# Replace columns with 7-day rolling average
+for i in range(len(estim_cases.columns)):
+    estim_cases.iloc[:,i] = estim_cases.iloc[:,i].rolling(window = 7,min_periods=1).mean()
 
 # Restructure for danfo.js
 df = ww.copy()
