@@ -109,6 +109,9 @@ df_melted['Country'] = 'Netherlands'
 # Reorder the columns
 df_melted = df_melted[['Country', 'Region', 'Date', 'Measure', 'Value']]
 
+# Change any negative values to 0
+df_melted['Value'] = df_melted['Value'].clip(lower=0)
+
 # CSV:
 df_melted.to_csv('Netherlands_cleaned.csv', index=False)
 
