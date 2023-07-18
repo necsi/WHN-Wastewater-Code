@@ -27,7 +27,6 @@
       var countries = ['Finland', 'Canada', 'Netherlands'];
       var regions = ['Helsinki', 'Joensuu', 'Jyväskylä', 'Kuopio', 'Oulu', 'Tampere', 'Turku', 'Vaasa'];
       var measures = ['wastewater', 'inf', 'official'];
-
       $("#countries").html(countries.map(country => `<option value="${country}">${country}</option>`).join(""));
       $("#regions").html(regions.map(region => `<option value="${region}">${region}</option>`).join(""));
      
@@ -41,7 +40,6 @@
           var selected_country = $('#countries').val();
           var selected_region = $('#regions').val();
           var selected_measures = measures;
-
           fetch(`./${selected_country}_cleaned.json`)
               .then(response => response.json())
               .then(data => {
@@ -49,28 +47,29 @@
                   var labels = [];
                   var legends = [];
                   var dataValue = [];
-                  var firstNonZeroDate = Infinity;
                   selected_measures.forEach((measure, index) => {
                       let filteredData = data.filter(item => item.Region === selected_region && item.Measure === measure);
-                      // Find first non-zero or non-NaN date
-                      for (let i = 0; i < filteredData.length; i++) {
-                          if (filteredData[i].Value !== 0 && !isNaN(filteredData[i].Value)) {
-                              firstNonZeroDate = Math.min(firstNonZeroDate, new Date(filteredData[i].Date).getTime());
-                              break;
-                          }
-                      }
-                  });
-                  
-                    
-                  selected_measures.forEach((measure, index) => {
-                      let filteredData = data.filter(item => item.Region === selected_region && item.Measure === measure);
-                      // Remove leading zeros and NaNs
-                      filteredData = filteredData.filter(item => new Date(item.Date).getTime() >= firstNonZeroDate);
                       let timeData = filteredData.map(item => {
                           let date = new Date(item.Date);
                           return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-                      });
 
+    
+          
+            
+    
+
+          
+          Expand Down
+          
+            
+    
+
+          
+          Expand Up
+    
+    @@ -155,4 +170,3 @@
+  
+                      });
                       let valueData = filteredData.map(item => item.Value);
                       let label;
                       let yAxisIndex;
@@ -100,7 +99,6 @@
                         legends.push(label);
                       }
                   });
-
                   myChart.setOption({
                       tooltip: {
                           trigger: 'axis'
@@ -136,16 +134,13 @@
                   
               });
       }
-
       function updateRegionsAndMeasures(data) {
           let regions = [...new Set(data.map(item => item.Region))];
           $("#regions").html(regions.map(region => `<option value="${region}">${region}</option>`).join(""));
-
           let measures = [...new Set(data.map(item => item.Measure))];
           measures = measures.filter(measure => measure != null);
          
       }
-
       function loadData() {
           fetch(`./${$("#countries").val()}_cleaned.json`)
           .then(response => response.json())
@@ -156,13 +151,10 @@
               console.log(err);
           });
       }
-
       loadData();
-
       $("#countries").on("change", function() {
           loadData();
       });
-
       $("#countries, #regions, #measuresInput").on("change", function() {
           updateData();
       });
