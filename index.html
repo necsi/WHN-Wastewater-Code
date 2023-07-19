@@ -47,28 +47,24 @@
                   var labels = [];
                   var legends = [];
                   var dataValue = [];
+                  var firstNonZeroDate = Infinity;
                   selected_measures.forEach((measure, index) => {
                       let filteredData = data.filter(item => item.Region === selected_region && item.Measure === measure);
+                      // Find first non-zero or non-NaN date
+                      for (let i = 0; i < filteredData.length; i++) {
+                          if (filteredData[i].Value !== 0 && filteredData[i].Value !== null) {
+                              firstNonZeroDate = Math.min(firstNonZeroDate, new Date(filteredData[i].Date).getTime());
+                              break;
+                          }
+                      }
+                  });
+                  selected_measures.forEach((measure, index) => {
+                    let filteredData = data.filter(item => item.Region === selected_region && item.Measure === measure);
+                    // Remove leading zeros and NaNs
+                    filteredData = filteredData.filter(item => new Date(item.Date).getTime() >= firstNonZeroDate);
                       let timeData = filteredData.map(item => {
                           let date = new Date(item.Date);
                           return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-
-    
-          
-            
-    
-
-          
-          Expand Down
-          
-            
-    
-
-          
-          Expand Up
-    
-    @@ -155,4 +170,3 @@
-  
                       });
                       let valueData = filteredData.map(item => item.Value);
                       let label;
