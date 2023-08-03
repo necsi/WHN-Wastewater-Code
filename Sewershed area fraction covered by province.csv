@@ -1,0 +1,1274 @@
+﻿rwzi_code,rwzi_name,population,province,fraction
+1008,Stadskanaal,31846,Groningen ,1.00
+1010,Ter Apel,13723,Groningen ,1.00
+1011,Uithuizermeeden,11036,Groningen ,1.00
+1024,Ulrum,5142,Groningen ,1.00
+1025,Zuidhorn,16105,Groningen ,1.00
+1025,Zuidhorn,16105,Drenthe   ,0.00
+1026,Hoogezand,30978,Groningen ,1.00
+1027,Oude Pekela,12272,Groningen ,1.00
+1028,Onderdendam,13751,Groningen ,1.00
+1029,Leek,22711,Groningen ,0.96
+1029,Leek,22711,Fryslân   ,0.01
+1029,Leek,22711,Drenthe   ,0.04
+1030,Winsum,15730,Groningen ,1.00
+1031,Gaarkeuken,15080,Groningen ,1.00
+1032,Marum,7914,Groningen ,1.00
+1033,Garmerwolde,241658,Groningen ,0.99
+1033,Garmerwolde,241658,Drenthe   ,0.01
+1034,Feerwerd,3524,Groningen ,1.00
+1038,Scheve Klap,4821,Groningen ,1.00
+1039,Scheemda,37253,Groningen ,1.00
+1040,Vriescheloo,6372,Groningen ,1.00
+1041,Wehe Den Hoorn,4917,Groningen ,1.00
+1044,Delfzijl,33800,Groningen ,1.00
+1045,Veendam,39240,Groningen ,1.00
+1046,Bellingwolde,6393,Groningen ,1.00
+2002,Oosterwolde,23520,Fryslân   ,1.00
+2011,Leeuwarden,103020,Fryslân   ,1.00
+2012,Drachten,67141,Fryslân   ,1.00
+2013,Burgum,30841,Fryslân   ,1.00
+2015,Gorredijk,22725,Fryslân   ,1.00
+2016,Wolvega,28574,Fryslân   ,1.00
+2017,Sint Annaparochie,10762,Fryslân   ,1.00
+2018,Sneek,41703,Fryslân   ,1.00
+2019,Kootstertille,25792,Fryslân   ,1.00
+2020,Ameland,3756,Fryslân   ,1.00
+2021,Damwoude,25214,Fryslân   ,1.00
+2022,Joure,19706,Fryslân   ,1.00
+2023,Bolsward,27801,Fryslân   ,1.00
+2024,Sloten,12199,Fryslân   ,1.00
+2025,Akkrum,7279,Fryslân   ,1.00
+2026,Terschelling,4959,Fryslân   ,1.00
+2027,Lemmer,13736,Fryslân   ,1.00
+2028,Dokkum,30470,Fryslân   ,1.00
+2029,Birdaard,21024,Fryslân   ,1.00
+2030,Workum,5480,Fryslân   ,1.00
+2031,Heerenveen,47931,Fryslân   ,1.00
+2032,Harlingen,24692,Fryslân   ,1.00
+2036,Grouw,14488,Fryslân   ,1.00
+2037,Warns,6698,Fryslân   ,1.00
+2038,Franeker,31970,Fryslân   ,1.00
+2040,Vlieland,1195,Fryslân   ,1.00
+2041,Schiermonnikoog,944,Fryslân   ,1.00
+3001,Beilen,22775,Drenthe   ,1.00
+3010,Assen,75418,Drenthe   ,1.00
+3014,Meppel,53324,Drenthe   ,0.72
+3014,Meppel,53324,IJsselland,0.28
+3022,Emmen,108081,Drenthe   ,1.00
+3023,Tweede Exloermond,7967,Drenthe   ,1.00
+3027,Smilde,9663,Drenthe   ,1.00
+3028,Sleen,19915,Drenthe   ,1.00
+3030,Eelde,52058,Groningen ,0.03
+3030,Eelde,52058,Drenthe   ,0.97
+3031,Gieten,31424,Drenthe   ,1.00
+3032,Dieverbrug,19684,Drenthe   ,1.00
+3033,Echten,77996,Drenthe   ,0.98
+3033,Echten,77996,IJsselland,0.02
+3034,Coevorden,27638,Drenthe   ,0.77
+3034,Coevorden,27638,IJsselland,0.23
+4005,Genemuiden,23705,IJsselland,1.00
+4006,Olst,18493,IJsselland,1.00
+4006,Olst,18493,Noord- en Oost-Gelderland ,0.00
+4016,Ommen,13695,IJsselland,1.00
+4017,Vollenhove,6832,IJsselland,1.00
+4018,Heino,8837,IJsselland,1.00
+4019,Deventer,92600,IJsselland,1.00
+4020,Steenwijk,37260,Drenthe   ,0.00
+4020,Steenwijk,37260,IJsselland,1.00
+4021,Raalte,36656,IJsselland,0.95
+4021,Raalte,36656,Twente,0.05
+4022,Holten,22067,IJsselland,0.30
+4022,Holten,22067,Twente,0.70
+4023,Kampen,52478,IJsselland,0.99
+4023,Kampen,52478,Flevoland ,0.01
+4024,Hardenberg,33408,IJsselland,1.00
+4024,Hardenberg,33408,Twente,0.00
+4025,Dalfsen,27281,IJsselland,1.00
+4026,Zwolle,123740,IJsselland,1.00
+4027,Tollebeek,69507,IJsselland,0.00
+4027,Tollebeek,69507,Flevoland ,1.00
+4028,Dedemsvaart,23883,Drenthe   ,0.00
+4028,Dedemsvaart,23883,IJsselland,1.00
+4030,Hessenpoort,8633,IJsselland,1.00
+5001,Haaksbergen,28740,Twente,1.00
+5001,Haaksbergen,28740,Noord- en Oost-Gelderland ,0.00
+5002,Enschede,148642,Twente,1.00
+5003,Glanerbrug,12161,Twente,1.00
+5004,Vriezenveen,13837,Twente,1.00
+5005,Tubbergen,13682,Twente,1.00
+5011,Denekamp,11101,Twente,1.00
+5012,Oldenzaal,44141,Twente,1.00
+5014,Vroomshoop,17185,IJsselland,0.00
+5014,Vroomshoop,17185,Twente,1.00
+5015,Losser,18039,Twente,1.00
+5016,Goor,16301,Twente,1.00
+5016,Goor,16301,Noord- en Oost-Gelderland ,0.00
+5017,Hengelo,116027,Twente,1.00
+5018,Ootmarsum,7237,Twente,1.00
+5019,Almelo-Vissedijk,34508,Twente,1.00
+5020,Almelo-Sumpel,62321,Twente,1.00
+5022,Rijssen,35979,Twente,1.00
+5023,Nijverdal,32193,IJsselland,0.04
+5023,Nijverdal,32193,Twente,0.97
+5025,Den Ham,5503,Twente,1.00
+6003,Dronten,42271,Flevoland ,1.00
+6004,Lelystad,81203,Flevoland ,1.00
+6005,Almere,217792,Flevoland ,1.00
+6006,Zeewolde,23293,Flevoland ,1.00
+7002,Aalten,18803,Noord- en Oost-Gelderland ,1.00
+7006,Wehl,6026,Noord- en Oost-Gelderland ,1.00
+7014,Ruurlo,8589,Noord- en Oost-Gelderland ,1.00
+7015,Lichtenvoorde,18398,Noord- en Oost-Gelderland ,1.00
+7016,Winterswijk,38935,Noord- en Oost-Gelderland ,1.00
+7017,Varsseveld,13597,Noord- en Oost-Gelderland ,1.00
+7018,Dinxperlo,9075,Noord- en Oost-Gelderland ,1.00
+7019,Zutphen,78093,IJsselland,0.00
+7019,Zutphen,78093,Noord- en Oost-Gelderland ,1.00
+7020,Nieuwgraaf,205644,Noord- en Oost-Gelderland ,0.08
+7020,Nieuwgraaf,205644,Gelderland-Midden ,0.92
+7021,Olburgen,69837,Noord- en Oost-Gelderland ,0.46
+7021,Olburgen,69837,Gelderland-Midden ,0.54
+7022,Etten,101332,Noord- en Oost-Gelderland ,1.00
+7023,Haarlo,38066,Noord- en Oost-Gelderland ,1.00
+8005,Nijkerk,46910,Noord- en Oost-Gelderland ,0.01
+8005,Nijkerk,46910,Gelderland-Midden ,0.99
+8005,Nijkerk,46910,Utrecht   ,0.00
+8009,Elburg,54992,Noord- en Oost-Gelderland ,1.00
+8011,Harderwijk,105685,Noord- en Oost-Gelderland ,0.95
+8011,Harderwijk,105685,Gelderland-Midden ,0.05
+8016,Heerde,18878,IJsselland,0.00
+8016,Heerde,18878,Noord- en Oost-Gelderland ,1.00
+8017,Epe,17379,Noord- en Oost-Gelderland ,1.00
+8019,Bennekom,16164,Gelderland-Midden ,1.00
+8021,Ede,157774,Gelderland-Midden ,1.00
+8021,Ede,157774,Utrecht   ,0.00
+8022,Apeldoorn,176782,Noord- en Oost-Gelderland ,1.00
+8022,Apeldoorn,176782,Gelderland-Midden ,0.00
+8023,Brummen,22743,Noord- en Oost-Gelderland ,1.00
+8024,Renkum,70703,Gelderland-Midden ,1.00
+8025,Terwolde,29368,IJsselland,0.08
+8025,Terwolde,29368,Noord- en Oost-Gelderland ,0.92
+8026,Hattem,36694,IJsselland,0.01
+8026,Hattem,36694,Noord- en Oost-Gelderland ,0.99
+9010,Groesbeek,16599,Gelderland-Zuid   ,1.00
+9012,Geldermalsen,25665,Gelderland-Zuid   ,1.00
+9013,Asperen,5521,Gelderland-Zuid   ,1.00
+9016,Arnhem,155255,Gelderland-Midden ,0.86
+9016,Arnhem,155255,Gelderland-Zuid   ,0.14
+9017,Bergharen,5057,Gelderland-Zuid   ,1.00
+9019,Culemborg,34435,Gelderland-Zuid   ,1.00
+9020,Overasselt,5197,Gelderland-Zuid   ,1.00
+9024,Nijmegen,243215,Gelderland-Zuid   ,1.00
+9025,Tiel,72621,Gelderland-Zuid   ,1.00
+9026,Dodewaard,23654,Gelderland-Midden ,0.29
+9026,Dodewaard,23654,Gelderland-Zuid   ,0.71
+9027,Druten,29353,Gelderland-Zuid   ,1.00
+9030,Maasbommel,2720,Gelderland-Zuid   ,1.00
+9031,Beesd,6166,Gelderland-Zuid   ,1.00
+9032,Zetten,6825,Gelderland-Midden ,1.00
+9032,Zetten,6825,Gelderland-Zuid   ,0.00
+9037,Gorinchem,19001,Gelderland-Zuid   ,0.17
+9037,Gorinchem,19001,Zuid-Holland-Zuid ,0.83
+9038,Gendt,26892,Gelderland-Midden ,1.00
+9039,Dreumel,6511,Gelderland-Zuid   ,1.00
+9040,Haaften,11438,Gelderland-Zuid   ,1.00
+9041,Zaltbommel,54096,Gelderland-Zuid   ,1.00
+9042,Millingen aan de Rijn,8071,Gelderland-Zuid   ,1.00
+10001,Zeist,59753,Utrecht   ,1.00
+10003,De Bilt,49059,Utrecht   ,1.00
+10008,Driebergen,29400,Utrecht   ,1.00
+10009,Utrecht,269712,Utrecht   ,1.00
+10010,Soest,72334,Utrecht   ,1.00
+10012,De Meern,31242,Utrecht   ,1.00
+10020,Woudenberg,30228,Gelderland-Midden ,0.34
+10020,Woudenberg,30228,Utrecht   ,0.66
+10021,Veenendaal,76234,Gelderland-Midden ,0.00
+10021,Veenendaal,76234,Utrecht   ,1.00
+10024,Montfoort,13814,Utrecht   ,1.00
+10025,Bunnik,15514,Utrecht   ,1.00
+10027,Amersfoort,211540,Gelderland-Midden ,0.00
+10027,Amersfoort,211540,Utrecht   ,1.00
+10028,Nieuwegein,98349,Utrecht   ,1.00
+10029,Wijk Bij Duurstede,24031,Utrecht   ,1.00
+10031,Breukelen,14046,Utrecht   ,1.00
+10032,Oudewater,10207,Utrecht   ,1.00
+10032,Oudewater,10207,Hollands-Midden   ,0.01
+10034,Ronde Venen,35382,Utrecht   ,1.00
+10035,Rhenen,32030,Utrecht   ,1.00
+10036,Houten,50332,Utrecht   ,1.00
+10037,Loenen,8526,Utrecht   ,0.97
+10037,Loenen,8526,Gooi en Vechtstreek   ,0.03
+10038,Lopik,14120,Utrecht   ,1.00
+11004,Hilversum,57973,Gooi en Vechtstreek   ,1.00
+11005,Amstelveen,101088,Amsterdam-Amstelland  ,1.00
+11006,Uithoorn,40296,Amsterdam-Amstelland  ,1.00
+11008,Blaricum,33332,Utrecht   ,0.28
+11008,Blaricum,33332,Gooi en Vechtstreek   ,0.72
+11010,Weesp,29806,Utrecht   ,0.05
+11010,Weesp,29806,Amsterdam-Amstelland  ,0.00
+11010,Weesp,29806,Amsterdam-Amstelland  ,0.70
+11010,Weesp,29806,Gooi en Vechtstreek   ,0.95
+11010,Weesp,29806,Gooi en Vechtstreek   ,0.25
+11012,Huizen,40938,Gooi en Vechtstreek   ,1.00
+11013,Horstermeer,110047,Utrecht   ,0.01
+11013,Horstermeer,110047,Gooi en Vechtstreek   ,0.99
+11014,Amsterdam West,676762,Utrecht   ,0.01
+11014,Amsterdam West,676762,Zaanstreek-Waterland  ,0.00
+11014,Amsterdam West,676762,Amsterdam-Amstelland  ,0.99
+12001,Heiloo,42820,Noord-Holland-Noord   ,1.00
+12006,Alkmaar,48715,Noord-Holland-Noord   ,1.00
+12010,Zaandam-Oost,74871,Zaanstreek-Waterland  ,1.00
+12010,Zaandam-Oost,74871,Amsterdam-Amstelland  ,0.00
+12012,Everstekoog,13687,Noord-Holland-Noord   ,1.00
+12013,Geestmerambacht,187159,Noord-Holland-Noord   ,1.00
+12014,Beemster,104999,Noord-Holland-Noord   ,0.07
+12014,Beemster,104999,Zaanstreek-Waterland  ,0.93
+12016,Katwoude,45416,Zaanstreek-Waterland  ,1.00
+12018,Wieringen,8472,Noord-Holland-Noord   ,1.00
+12019,Stolpen,36471,Noord-Holland-Noord   ,1.00
+12021,Wervershoof,180902,Noord-Holland-Noord   ,1.00
+12022,Beverwijk,174828,Noord-Holland-Noord   ,0.14
+12022,Beverwijk,174828,Zaanstreek-Waterland  ,0.32
+12022,Beverwijk,174828,Kennemerland  ,0.54
+12023,Den Helder,68676,Noord-Holland-Noord   ,1.00
+12024,Ursem,39595,Noord-Holland-Noord   ,1.00
+12024,Ursem,39595,Zaanstreek-Waterland  ,0.00
+12025,Wieringermeer,12299,Noord-Holland-Noord   ,1.00
+12026,Oosthuizen,4797,Zaanstreek-Waterland  ,1.00
+13003,Velsen,68419,Kennemerland  ,1.00
+13004,Heemstede,27555,Kennemerland  ,1.00
+13005,Zwanenburg,91868,Kennemerland  ,1.00
+13005,Zwanenburg,91868,Amsterdam-Amstelland  ,0.00
+13010,Haarlem-Waarderpolder,142026,Kennemerland  ,1.00
+13012,Haarlem-Schalkwijk,58125,Kennemerland  ,1.00
+13023,Noordwijk,58934,Hollands-Midden   ,1.00
+13030,Leimuiden,5398,Kennemerland  ,0.14
+13030,Leimuiden,5398,Hollands-Midden   ,0.86
+13033,Leiden Zuid-West,99910,Haaglanden,0.02
+13033,Leiden Zuid-West,99910,Hollands-Midden   ,0.98
+13034,Lisse,23014,Hollands-Midden   ,1.00
+13035,Alphen-Noord,50361,Hollands-Midden   ,1.00
+13038,Nieuwveen,23599,Hollands-Midden   ,1.00
+13039,Gouda,74974,Hollands-Midden   ,1.00
+13041,Katwijk,106302,Hollands-Midden   ,1.00
+13042,Bodegraven,31580,Utrecht   ,0.00
+13042,Bodegraven,31580,Hollands-Midden   ,1.00
+13044,Zwaanshoek,118594,Kennemerland  ,0.59
+13044,Zwaanshoek,118594,Amsterdam-Amstelland  ,0.20
+13044,Zwaanshoek,118594,Hollands-Midden   ,0.21
+13046,Leiden Noord,96583,Hollands-Midden   ,1.00
+13047,Nieuwe Wetering,16464,Hollands-Midden   ,1.00
+13048,Waddinxveen-Randenburg,44228,Hollands-Midden   ,1.00
+13049,Alphen Kerk en Zanen,51372,Hollands-Midden   ,1.00
+14002,Woerden,50096,Utrecht   ,0.89
+14002,Woerden,50096,Hollands-Midden   ,0.11
+14003,Leidsche Rijn,109635,Utrecht   ,1.00
+15004,Nieuwe Waterweg,70152,Haaglanden,0.85
+15004,Nieuwe Waterweg,70152,Rotterdam-Rijnmond,0.15
+15005,Houtrust,244964,Haaglanden,1.00
+15007,De Groote Lucht,206411,Haaglanden,0.09
+15007,De Groote Lucht,206411,Rotterdam-Rijnmond,0.91
+15008,Harnaschpolder,843483,Haaglanden,0.96
+15008,Harnaschpolder,843483,Hollands-Midden   ,0.00
+15008,Harnaschpolder,843483,Rotterdam-Rijnmond,0.04
+16009,Kortenoord,76930,Hollands-Midden   ,0.68
+16009,Kortenoord,76930,Rotterdam-Rijnmond,0.32
+16010,Kralingseveer,269505,Rotterdam-Rijnmond,1.00
+16011,Groenedijk,48126,Hollands-Midden   ,0.01
+16011,Groenedijk,48126,Rotterdam-Rijnmond,0.99
+17002,Bergambacht,6349,Hollands-Midden   ,1.00
+17004,Ammerstol,2024,Hollands-Midden   ,1.00
+17005,Stolwijk,5712,Hollands-Midden   ,1.00
+17011,Ridderkerk,59173,Rotterdam-Rijnmond,1.00
+17011,Ridderkerk,59173,Zuid-Holland-Zuid ,0.00
+17013,Papendrecht,32206,Zuid-Holland-Zuid ,1.00
+17016,Alblasserdam,34299,Zuid-Holland-Zuid ,1.00
+17026,Hardinxveld-Giessendam,13521,Zuid-Holland-Zuid ,1.00
+17029,Vianen,27933,Utrecht   ,1.00
+17040,Oostvoorne,14242,Rotterdam-Rijnmond,1.00
+17041,Hellevoetsluis,65119,Rotterdam-Rijnmond,0.97
+17041,Hellevoetsluis,65119,Zuid-Holland-Zuid ,0.03
+17043,Strijen,9301,Zuid-Holland-Zuid ,1.00
+17044,Dordrecht,119331,Zuid-Holland-Zuid ,1.00
+17045,Oud-Beijerland,34402,Zuid-Holland-Zuid ,1.00
+17048,Goedereede,12024,Rotterdam-Rijnmond,1.00
+17052,Sliedrecht,34190,Zuid-Holland-Zuid ,1.00
+17053,De Groote Zaag,49564,Hollands-Midden   ,0.41
+17053,De Groote Zaag,49564,Rotterdam-Rijnmond,0.59
+17054,Piershil,5964,Zuid-Holland-Zuid ,1.00
+17055,Middelharnis,24264,Rotterdam-Rijnmond,1.00
+17056,Oude Tonge,9099,Rotterdam-Rijnmond,1.00
+17057,Rozenburg,12456,Rotterdam-Rijnmond,1.00
+17061,Dokhaven,335577,Rotterdam-Rijnmond,1.00
+17062,Heenvliet,7012,Rotterdam-Rijnmond,1.00
+17063,Leerdam,20011,Utrecht   ,1.00
+17065,Groot-Ammers,28239,Utrecht   ,0.15
+17065,Groot-Ammers,28239,Hollands-Midden   ,0.47
+17065,Groot-Ammers,28239,Zuid-Holland-Zuid ,0.38
+17066,Numansdorp,17176,Zuid-Holland-Zuid ,1.00
+17067,Haastrecht,4286,Hollands-Midden   ,1.00
+17068,Berkenwoude,1867,Hollands-Midden   ,1.00
+17070,Hoogvliet,58911,Rotterdam-Rijnmond,1.00
+17074,Den Bommel,3000,Rotterdam-Rijnmond,1.00
+17075,Ooltgensplaat,2659,Rotterdam-Rijnmond,1.00
+17076,Schelluinen,44972,Utrecht   ,0.15
+17076,Schelluinen,44972,Zuid-Holland-Zuid ,0.85
+17077,Spijkenisse-Allemanspolder,74854,Rotterdam-Rijnmond,1.00
+17078,Zwijndrecht,115631,Rotterdam-Rijnmond,0.17
+17078,Zwijndrecht,115631,Zuid-Holland-Zuid ,0.83
+17079,Barendrecht,37418,Rotterdam-Rijnmond,1.00
+18006,Westerschouwen,7920,Zeeland   ,1.00
+18007,Mastgat,9722,Zeeland   ,1.00
+18009,De Verseput,16474,Zeeland   ,1.00
+19001,Sint Maartensdijk,15444,Zeeland   ,1.00
+19003,Tholen,10919,Zeeland   ,1.00
+20009,Waarde,21166,Zeeland   ,1.00
+20010,Camperlandpolder,7666,Zeeland   ,1.00
+20011,Willem Annapolder,76475,Zeeland   ,1.00
+21001,Walcheren,115631,Zeeland   ,1.00
+22008,Retranchement,3628,Zeeland   ,1.00
+22012,Oostburg,10816,Zeeland   ,1.00
+22013,Breskens,10253,Zeeland   ,1.00
+23002,Terneuzen,52943,Zeeland   ,1.00
+24001,Hulst,19965,Zeeland   ,1.00
+24002,Kloosterzande,7562,Zeeland   ,1.00
+25001,Rijen,52681,Midden- en West-Brabant   ,1.00
+25003,Waalwijk,30173,Midden- en West-Brabant   ,1.00
+25008,Ossendrecht,5705,Zeeland   ,0.02
+25008,Ossendrecht,5705,Midden- en West-Brabant   ,0.99
+25012,Putte,3858,Midden- en West-Brabant   ,1.00
+25013,Riel,7286,Midden- en West-Brabant   ,1.00
+25014,Waspik,5222,Midden- en West-Brabant   ,1.00
+25016,Nieuw-Vossemeer,2234,Midden- en West-Brabant   ,1.00
+25017,Nieuwveer,265490,Midden- en West-Brabant   ,1.00
+25019,Chaam,4471,Midden- en West-Brabant   ,1.00
+25020,Kaatsheuvel,36109,Midden- en West-Brabant   ,1.00
+25021,Bath,248264,Midden- en West-Brabant   ,1.00
+25023,Dongemond,88667,Midden- en West-Brabant   ,1.00
+25025,Halsteren,12455,Midden- en West-Brabant   ,1.00
+25026,Baarle-Nassau,6381,Midden- en West-Brabant   ,1.00
+25027,Lage Zwaluwe,6034,Midden- en West-Brabant   ,1.00
+25028,Dinteloord,5647,Midden- en West-Brabant   ,1.00
+25029,Willemstad,3545,Midden- en West-Brabant   ,1.00
+26005,Sleeuwijk,57008,Midden- en West-Brabant   ,1.00
+27003,Eindhoven,467169,Brabant-Noord ,0.00
+27003,Eindhoven,467169,Brabant-Zuidoost  ,1.00
+27004,Boxtel,45900,Midden- en West-Brabant   ,0.00
+27004,Boxtel,45900,Brabant-Noord ,1.00
+27005,Hapert,36127,Midden- en West-Brabant   ,0.00
+27005,Hapert,36127,Brabant-Zuidoost  ,1.00
+27006,Soerendonk,21087,Brabant-Zuidoost  ,1.00
+27008,'s Hertogenbosch,177471,Midden- en West-Brabant   ,0.00
+27008,'s Hertogenbosch,177471,Brabant-Noord ,1.00
+27009,Haaren,36870,Midden- en West-Brabant   ,0.87
+27009,Haaren,36870,Brabant-Noord ,0.13
+27010,Sint-Oedenrode,63291,Midden- en West-Brabant   ,0.00
+27010,Sint-Oedenrode,63291,Brabant-Noord ,0.29
+27010,Sint-Oedenrode,63291,Brabant-Zuidoost  ,0.71
+27011,Biest-Houtakker,42307,Midden- en West-Brabant   ,0.87
+27011,Biest-Houtakker,42307,Brabant-Zuidoost  ,0.13
+28002,Asten,43230,Brabant-Zuidoost  ,1.00
+28003,Aarle-Rixtel,173624,Brabant-Noord ,0.00
+28003,Aarle-Rixtel,173624,Brabant-Zuidoost  ,1.00
+28005,Dinther,125190,Brabant-Noord ,1.00
+28006,Vinkel,41547,Brabant-Noord ,1.00
+29002,Oijen,162103,Brabant-Noord ,1.00
+29003,Land van Cuijk,88378,Brabant-Noord ,1.00
+29003,Land van Cuijk,88378,Brabant-Zuidoost  ,0.00
+30003,Limmel,78319,Limburg-Zuid  ,1.00
+30005,Weert,67890,Limburg-Noord ,1.00
+30007,Bosscherveld,60034,Limburg-Zuid  ,1.00
+30011,Simpelveld,10422,Limburg-Zuid  ,1.00
+30013,Rimburg,31109,Limburg-Zuid  ,1.00
+30014,Kerkrade,42182,Limburg-Zuid  ,1.00
+30015,Hoensbroek,178875,Limburg-Zuid  ,1.00
+30016,Heugem,45475,Limburg-Zuid  ,1.00
+30017,Venlo,190344,Limburg-Noord ,1.00
+30018,Meijel,6227,Limburg-Noord ,1.00
+30019,Wijlre,27035,Limburg-Zuid  ,1.00
+30020,Venray,53860,Limburg-Noord ,1.00
+30021,Stein,25931,Limburg-Zuid  ,1.00
+30022,Susteren,128849,Limburg-Noord ,0.27
+30022,Susteren,128849,Limburg-Zuid  ,0.73
+30023,Panheel,18150,Limburg-Noord ,1.00
+30024,Roermond,118819,Limburg-Noord ,1.00
+30025,Gennep,34691,Limburg-Noord ,1.00
+31005,Westpoort,313928,Zaanstreek-Waterland  ,0.20
+31005,Westpoort,313928,Kennemerland  ,0.00
+31005,Westpoort,313928,Amsterdam-Amstelland  ,0.80
+32002,Tilburg,226629,Midden- en West-Brabant   ,1.00
+32002,Tilburg,226629,Brabant-Noord ,0.00
+33001,Foxhol,30140,Groningen ,0.61
+33001,Foxhol,30140,Drenthe   ,0.39
+49998,Bruggehof (particulier),169,Zuid-Holland-Zuid ,1.00
+49999,Schiphol(derden),111,Kennemerland  ,1.00
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
