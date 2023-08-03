@@ -16,7 +16,7 @@ ww.columns = ['Date', 'Code', 'Location', 'RNA_flow_per_100000']
 # Convert date to datetime
 ww['Date'] = pd.to_datetime(ww['Date'])
 
-# Using only dates after 2023-01-01
+# Using only dates after 2022-01-01
 ww = ww[ww['Date'] > '2022-01-01']
 
 # Get all unique Locations
@@ -28,7 +28,7 @@ pop = pd.read_csv('https://raw.githubusercontent.com/necsi/WHN-Wastewater-Code/m
 # Rename the columns
 pop.columns = ['Code', 'Inhabitants']
 
-# Add the population data to the wastewater data in an "inhabitants" column based on the code
+# Add the population data to the wastewater data in an "inhabitants" column
 ww = ww.merge(pop, how='left', left_on='Code', right_on='Code')
 
 # Bring values to billion gene copies per day
@@ -112,9 +112,70 @@ df_melted = df_melted[['Country', 'Region', 'Date', 'Measure', 'Value']]
 # Change any negative values to 0
 df_melted['Value'] = df_melted['Value'].clip(lower=0)
 
-# CSV:
-df_melted.to_csv('Netherlands_cleaned.csv', index=False)
+# Load the sewershed fraction data
+sewershed_data = pd.read_csv("Sewershed area fraction covered by province.csv")
+
+# Filter the first dataframe to only include rows where "Measure" is "inf"
+infection_data = df_melted[df_melted["Measure"] == "inf"]
+
+# Join the two dataframes on the "Region" column from the first dataframe and the "rwzi_name" column from the second dataframe
+combined_data = infection_data.merge(sewershed_data, left_on="Region", right_on="rwzi_name", how="inner")
+
+# Group by "Date" and "province" and calculate the sum of "Value" multiplied by "fraction" for each group
+grouped_data = combined_data.groupby(["Date", "province"]).apply(lambda df: (df["Value"] * df["fraction"]).sum()).reset_index()
+
+# Rename the columns to match the original dataframe
+grouped_data.columns = ["Date", "Region", "Value"]
+
+# Add the "Country" and "Measure" columns
+grouped_data["Country"] = "Netherlands"
+grouped_data["Measure"] = "inf"
+
+# Reorder the columns to match the original dataframe
+grouped_data = grouped_data[["Country", "Region", "Date", "Measure", "Value"]]
+
+# Calculate the population served by the sewershed in each province
+sewershed_data["pop_served"] = sewershed_data["population"] * sewershed_data["fraction"]
+
+# Filter the first dataframe to only include rows where "Measure" is "wastewater"
+wastewater_data = df_melted[df_melted["Measure"] == "wastewater"]
+
+# Join the two dataframes on the "Region" column from the first dataframe and the "rwzi_name" column from the second dataframe
+combined_data2 = wastewater_data.merge(sewershed_data, left_on="Region", right_on="rwzi_name", how="inner")
+
+# For each date and province, calculate the sum of wastewater values weighted by the sewershed's population serving the province
+grouped_waste = combined_data2.groupby(["Date", "province"]).apply(lambda df: (df["Value"] * df["pop_served"]).sum()).reset_index()
+
+# For each date and province, calculate the sum of populations served by the sewersheds
+grouped_pop = combined_data2.groupby(["Date", "province"])["pop_served"].sum().reset_index()
+
+# Join the two grouped dataframes on "Date" and "province"
+grouped_data2 = grouped_waste.merge(grouped_pop, on=["Date", "province"], how="inner")
+
+# Divide the total wastewater value by the total population for each province to get the per capita wastewater value
+grouped_data2["Value"] = grouped_data2[0] / grouped_data2["pop_served"]
+
+# Drop the unnecessary columns
+grouped_data2 = grouped_data2.drop(columns=[0, "pop_served"])
+
+# Rename the columns to match the original dataframe
+grouped_data2.columns = ["Date", "Region", "Value"]
+
+# Add the "Country" and "Measure" columns
+grouped_data2["Country"] = "Netherlands"
+grouped_data2["Measure"] = "wastewater"
+
+# Reorder the columns to match the original dataframe
+grouped_data2 = grouped_data2[["Country", "Region", "Date", "Measure", "Value"]]
+
+# Append the new dataframe to the inf dataframe
+grouped_data3 = pd.concat([grouped_data, grouped_data2], ignore_index=True)
+
+# Append the new dataframe to the original dataframe
+updated_netherlands_data = pd.concat([grouped_data3, df_melted], ignore_index=True)
+
+# CSV
+updated_netherlands_data.to_csv('Netherlands_cleaned.csv', index=False)
 
 # Json
-df_melted.to_json('Netherlands_cleaned.json', orient='records')
-
+updated_netherlands_data.to_json('Netherlands_cleaned.json', orient='records')
