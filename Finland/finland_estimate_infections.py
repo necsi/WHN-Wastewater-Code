@@ -64,15 +64,26 @@ ww['Turku_mil_gc/cap'] = ww['Turku'] *1000 / p_Turku
 ww['Vaasa_mil_gc/cap'] = ww['Vaasa'] *1000 / p_Vaasa
 
 # Make new columns with 7 day rolling average
-ww['Espoo_7day'] = ww['Espoo_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
-ww['Helsinki_7day'] = ww['Helsinki_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
-ww['Joensuu_7day'] = ww['Joensuu_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
-ww['Jyväskylä_7day'] = ww['Jyväskylä_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
-ww['Kuopio_7day'] = ww['Kuopio_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
-ww['Oulu_7day'] = ww['Oulu_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
-ww['Tampere_7day'] = ww['Tampere_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
-ww['Turku_7day'] = ww['Turku_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
-ww['Vaasa_7day'] = ww['Vaasa_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+#ww['Espoo_7day'] = ww['Espoo_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+#ww['Helsinki_7day'] = ww['Helsinki_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+#ww['Joensuu_7day'] = ww['Joensuu_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+#ww['Jyväskylä_7day'] = ww['Jyväskylä_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+#ww['Kuopio_7day'] = ww['Kuopio_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+#ww['Oulu_7day'] = ww['Oulu_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+#ww['Tampere_7day'] = ww['Tampere_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+#ww['Turku_7day'] = ww['Turku_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+#ww['Vaasa_7day'] = ww['Vaasa_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+
+# Make new columns with 3-day average by taking the last day, the present day and the next day
+ww['Espoo_3day'] = (ww['Espoo_mil_gc/cap'].shift(1) + ww['Espoo_mil_gc/cap'] + ww['Espoo_mil_gc/cap'].shift(-1)) / 3
+ww['Helsinki_3day'] = (ww['Helsinki_mil_gc/cap'].shift(1) + ww['Helsinki_mil_gc/cap'] + ww['Helsinki_mil_gc/cap'].shift(-1)) / 3
+ww['Joensuu_3day'] = (ww['Joensuu_mil_gc/cap'].shift(1) + ww['Joensuu_mil_gc/cap'] + ww['Joensuu_mil_gc/cap'].shift(-1)) / 3
+ww['Jyväskylä_3day'] = (ww['Jyväskylä_mil_gc/cap'].shift(1) + ww['Jyväskylä_mil_gc/cap'] + ww['Jyväskylä_mil_gc/cap'].shift(-1)) / 3
+ww['Kuopio_3day'] = (ww['Kuopio_mil_gc/cap'].shift(1) + ww['Kuopio_mil_gc/cap'] + ww['Kuopio_mil_gc/cap'].shift(-1)) / 3
+ww['Oulu_3day'] = (ww['Oulu_mil_gc/cap'].shift(1) + ww['Oulu_mil_gc/cap'] + ww['Oulu_mil_gc/cap'].shift(-1)) / 3
+ww['Tampere_3day'] = (ww['Tampere_mil_gc/cap'].shift(1) + ww['Tampere_mil_gc/cap'] + ww['Tampere_mil_gc/cap'].shift(-1)) / 3
+ww['Turku_3day'] = (ww['Turku_mil_gc/cap'].shift(1) + ww['Turku_mil_gc/cap'] + ww['Turku_mil_gc/cap'].shift(-1)) / 3
+ww['Vaasa_3day'] = (ww['Vaasa_mil_gc/cap'].shift(1) + ww['Vaasa_mil_gc/cap'] + ww['Vaasa_mil_gc/cap'].shift(-1)) / 3
 
 # Estimate new infections
 # Make list of 14 first entries in gc in billions column of shedding
@@ -151,8 +162,12 @@ for i in range(len(estim_cases.columns)):
             estim_cases.iloc[j,i] = estim_cases.iloc[j+1,i]
 
 # Replace columns with 7-day rolling average
+#for i in range(len(estim_cases.columns)):
+#    estim_cases.iloc[:,i] = estim_cases.iloc[:,i].rolling(window = 7,min_periods=1).mean()
+
+# Replace columns with 3-day average by taking the last day, the present day and the next day
 for i in range(len(estim_cases.columns)):
-    estim_cases.iloc[:,i] = estim_cases.iloc[:,i].rolling(window = 7,min_periods=1).mean()
+    estim_cases.iloc[:,i] = (estim_cases.iloc[:,i].shift(1) + estim_cases.iloc[:,i] + estim_cases.iloc[:,i].shift(-1)) / 3
 
 # Restructure for danfo.js
 df = ww.copy()
@@ -161,9 +176,9 @@ df = ww.copy()
 df = df.reset_index()
 
 # Select the columns we need
-df = df[['Date', 'Espoo_7day', 'Helsinki_7day', 'Joensuu_7day',
-       'Jyväskylä_7day', 'Kuopio_7day', 'Oulu_7day', 'Tampere_7day',
-       'Turku_7day', 'Vaasa_7day', 'Espoo_new_inf_3day', 'Helsinki_new_inf_3day', 'Joensuu_new_inf_3day',
+df = df[['Date', 'Espoo_3day', 'Helsinki_3day', 'Joensuu_3day',
+       'Jyväskylä_3day', 'Kuopio_3day', 'Oulu_3day', 'Tampere_3day',
+       'Turku_3day', 'Vaasa_3day', 'Espoo_new_inf_3day', 'Helsinki_new_inf_3day', 'Joensuu_new_inf_3day',
        'Jyväskylä_new_inf_3day', 'Kuopio_new_inf_3day', 'Oulu_new_inf_3day',
        'Tampere_new_inf_3day', 'Turku_new_inf_3day', 'Vaasa_new_inf_3day']]
 
