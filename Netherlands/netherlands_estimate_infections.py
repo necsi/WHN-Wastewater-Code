@@ -56,8 +56,12 @@ ww = ww.resample('D').asfreq()
 ww = ww.interpolate(method='linear', axis = 0)
 
 # Make new columns with 7 day rolling average for each location
+#for loc in locations:
+#    ww[loc + '_7day_avg'] = ww[loc + '_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+
+# Make new columns with 3-day average by taking the last day, the present day and the next day
 for loc in locations:
-    ww[loc + '_7day_avg'] = ww[loc + '_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+    ww[loc + '_3day_avg'] = (ww[loc + '_mil_gc/cap'].shift(1) + ww[loc + '_mil_gc/cap'] + ww[loc + '_mil_gc/cap'].shift(-1)) / 3
 
 
 # Estimate new infections
@@ -87,11 +91,11 @@ df_new = df_new.reset_index()
 # Select the columns we need, that is Date, all ending in '_7day' and all ending in '_new_inf_3day'
 df = df_new[['Date']]
 for col in df_new.columns:
-    if col.endswith('_7day_avg') or col.endswith('_new_inf_3day'):
+    if col.endswith('_3day_avg') or col.endswith('_new_inf_3day'):
         df[col] = df_new[col]
 
-# Rename the columns by sustituting '_7day_avg' with '_wastewater' and '_new_inf_3day' with '_inf'
-df.columns = df.columns.str.replace('_7day_avg', '_wastewater')
+# Rename the columns by sustituting '_3day_avg' with '_wastewater' and '_new_inf_3day' with '_inf'
+df.columns = df.columns.str.replace('_3day_avg', '_wastewater')
 df.columns = df.columns.str.replace('_new_inf_3day', '_inf')
 
 # "Melt" the data so each row is a unique date-region combination
