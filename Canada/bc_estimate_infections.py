@@ -49,25 +49,41 @@ ww['Penticton_mil_gc/cap'] = ww['Penticton'] *1000 / p_Penticton
 
 
 # Make new columns with 7 day rolling average
-ww['Annacis_7day'] = ww['Annacis_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
-ww['Nw. Langley_7day'] = ww['Nw. Langley_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
-ww['Iona_7day'] = ww['Iona_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
-ww['Lion\'s Gate_7day'] = ww['Lion\'s Gate_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
-ww['Lulu_7day'] = ww['Lulu_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+#ww['Annacis_7day'] = ww['Annacis_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+#ww['Nw. Langley_7day'] = ww['Nw. Langley_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+#ww['Iona_7day'] = ww['Iona_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+#ww['Lion\'s Gate_7day'] = ww['Lion\'s Gate_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+#ww['Lulu_7day'] = ww['Lulu_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
 
-ww['Victoria_7day'] = ww['Victoria_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
-ww['Nanaimo_7day'] = ww['Nanaimo_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
-ww['Comox Valley_7day'] = ww['Comox Valley_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+#ww['Victoria_7day'] = ww['Victoria_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+#ww['Nanaimo_7day'] = ww['Nanaimo_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+#ww['Comox Valley_7day'] = ww['Comox Valley_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
 
-ww['Kamloops_7day'] = ww['Kamloops_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
-ww['Kelowna_7day'] = ww['Kelowna_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
-ww['Penticton_7day'] = ww['Penticton_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+#ww['Kamloops_7day'] = ww['Kamloops_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+#ww['Kelowna_7day'] = ww['Kelowna_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+#ww['Penticton_7day'] = ww['Penticton_mil_gc/cap'].rolling(window = 7,min_periods=1).mean()
+
+# Make new columns with 3-day average by taking the last day, the present day and the next day
+ww['Annacis_3day'] = (ww['Annacis_mil_gc/cap'].shift(1) + ww['Annacis_mil_gc/cap'] + ww['Annacis_mil_gc/cap'].shift(-1)) / 3
+ww['Nw. Langley_3day'] = (ww['Nw. Langley_mil_gc/cap'].shift(1) + ww['Nw. Langley_mil_gc/cap'] + ww['Nw. Langley_mil_gc/cap'].shift(-1)) / 3
+ww['Iona_3day'] = (ww['Iona_mil_gc/cap'].shift(1) + ww['Iona_mil_gc/cap'] + ww['Iona_mil_gc/cap'].shift(-1)) / 3
+ww['Lion\'s Gate_3day'] = (ww['Lion\'s Gate_mil_gc/cap'].shift(1) + ww['Lion\'s Gate_mil_gc/cap'] + ww['Lion\'s Gate_mil_gc/cap'].shift(-1)) / 3
+ww['Lulu_3day'] = (ww['Lulu_mil_gc/cap'].shift(1) + ww['Lulu_mil_gc/cap'] + ww['Lulu_mil_gc/cap'].shift(-1)) / 3
+
+ww['Victoria_3day'] = (ww['Victoria_mil_gc/cap'].shift(1) + ww['Victoria_mil_gc/cap'] + ww['Victoria_mil_gc/cap'].shift(-1)) / 3
+ww['Nanaimo_3day'] = (ww['Nanaimo_mil_gc/cap'].shift(1) + ww['Nanaimo_mil_gc/cap'] + ww['Nanaimo_mil_gc/cap'].shift(-1)) / 3
+ww['Comox Valley_3day'] = (ww['Comox Valley_mil_gc/cap'].shift(1) + ww['Comox Valley_mil_gc/cap'] + ww['Comox Valley_mil_gc/cap'].shift(-1)) / 3
+
+ww['Kamloops_3day'] = (ww['Kamloops_mil_gc/cap'].shift(1) + ww['Kamloops_mil_gc/cap'] + ww['Kamloops_mil_gc/cap'].shift(-1)) / 3
+ww['Kelowna_3day'] = (ww['Kelowna_mil_gc/cap'].shift(1) + ww['Kelowna_mil_gc/cap'] + ww['Kelowna_mil_gc/cap'].shift(-1)) / 3
+ww['Penticton_3day'] = (ww['Penticton_mil_gc/cap'].shift(1) + ww['Penticton_mil_gc/cap'] + ww['Penticton_mil_gc/cap'].shift(-1)) / 3
+
 
 
 # Make new columns with weighted average of health authorities
-ww['Metro_Vancouver_7day'] = (ww['Annacis_7day'] * p_Annacis + ww['Nw. Langley_7day'] * p_Nw_Langley + ww['Iona_7day'] * p_Iona + ww['Lion\'s Gate_7day'] * p_Lions_Gate + ww['Lulu_7day'] * p_Lulu) / p_Metro_Vancouver
-ww['Island_Health_7day'] = (ww['Victoria_7day'] * p_Victoria + ww['Nanaimo_7day'] * p_Nanaimo + ww['Comox Valley_7day'] * p_Comox_Valley) / p_Island_Health
-ww['Interior_Health_7day'] = (ww['Kamloops_7day'] * p_Kamloops + ww['Kelowna_7day'] * p_Kelowna + ww['Penticton_7day'] * p_Penticton) / p_Interior_Health
+ww['Metro_Vancouver_3day'] = (ww['Annacis_3day'] * p_Annacis + ww['Nw. Langley_3day'] * p_Nw_Langley + ww['Iona_3day'] * p_Iona + ww['Lion\'s Gate_3day'] * p_Lions_Gate + ww['Lulu_3day'] * p_Lulu) / p_Metro_Vancouver
+ww['Island_Health_3day'] = (ww['Victoria_3day'] * p_Victoria + ww['Nanaimo_3day'] * p_Nanaimo + ww['Comox Valley_3day'] * p_Comox_Valley) / p_Island_Health
+ww['Interior_Health_3day'] = (ww['Kamloops_3day'] * p_Kamloops + ww['Kelowna_3day'] * p_Kelowna + ww['Penticton_3day'] * p_Penticton) / p_Interior_Health
 
 
 # Estimate new cases
@@ -132,7 +148,7 @@ df['MetroVancouver_inf'] = df['VCH_new_inf_3day'] + df['FH_new_inf_3day']
 df = df.reset_index()
 
 # Select the columns we need
-df = df[['Date', 'Metro_Vancouver_7day', 'Island_Health_7day', 'Interior_Health_7day', 'MetroVancouver_inf', 'VIHA_new_inf_3day', 'IH_new_inf_3day']]
+df = df[['Date', 'Metro_Vancouver_3day', 'Island_Health_3day', 'Interior_Health_3day', 'MetroVancouver_inf', 'VIHA_new_inf_3day', 'IH_new_inf_3day']]
 
 # Rename the columns
 df.columns = ['Date', 'MetroVancouver_wastewater', 'IslandHealth_wastewater', 'InteriorHealth_wastewater', 'MetroVancouver_inf', 'IslandHealth_inf', 'InteriorHealth_inf']
