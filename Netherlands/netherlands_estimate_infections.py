@@ -85,6 +85,9 @@ for loc in locations:
 # Restructure for Tableau
 df_new = ww.copy()
 
+# Delete last row to avoid null entries
+df_new = df_new[:-1]
+
 # Get new index
 df_new = df_new.reset_index()
 
