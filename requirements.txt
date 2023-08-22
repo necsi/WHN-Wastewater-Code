@@ -6,3 +6,4 @@ psycopg2-binary==2.9.6
 requests==2.30.0
 urllib3==2.0.2
 whitenoise==6.4.0
+sodapy==2.2.0
