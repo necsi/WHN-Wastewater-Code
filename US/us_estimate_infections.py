@@ -214,13 +214,13 @@ grouped_data2["Measure"] = "wastewater"
 grouped_data2 = grouped_data2[["Country", "Region", "Date", "Measure", "Value"]]
 
 # Append the new dataframe to the inf dataframe
-grouped_data3 = pd.concat([grouped_data, grouped_data2], ignore_index=True)
+updated_us_data = pd.concat([grouped_data, grouped_data2], ignore_index=True)
 
 # Append the new dataframe to the original dataframe
-updated_us_data = pd.concat([grouped_data3, df_melted], ignore_index=True)
+#updated_us_data = pd.concat([grouped_data3, df_melted], ignore_index=True)
 
 # CSV
-# updated_us_data.to_csv('United_States_cleaned.csv', index=False)
+#updated_us_data.to_csv('United_States_cleaned.csv', index=False)
 
 # Json
 updated_us_data.to_json('United_States_cleaned.json', orient='records')
