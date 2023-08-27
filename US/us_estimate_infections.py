@@ -27,8 +27,8 @@ ww.columns = ['Date', 'key_plot_id', 'gc/capita/day']
 # Convert date to datetime
 ww['Date'] = pd.to_datetime(ww['Date'])
 
-# Using only dates after 2022-06-01
-ww = ww[ww['Date'] > '2022-06-01']
+# Using only dates after 2021-06-01
+ww = ww[ww['Date'] > '2021-06-01']
 
 # Sort dates from oldest to newest for each location
 ww = ww.sort_values(by=['key_plot_id', 'Date'])
@@ -52,8 +52,8 @@ pop.columns = ['key_plot_id', 'Inhabitants', 'Date']
 # Convert date to datetime
 pop['Date'] = pd.to_datetime(pop['Date'])
 
-# Using only dates after 2022-06-01
-pop = pop[pop['Date'] > '2022-06-01']
+# Using only dates after 2021-06-01
+pop = pop[pop['Date'] > '2021-06-01']
 
 # Remove duplicates
 pop = pop.drop_duplicates()
@@ -214,13 +214,104 @@ grouped_data2["Measure"] = "wastewater"
 grouped_data2 = grouped_data2[["Country", "Region", "Date", "Measure", "Value"]]
 
 # Append the new dataframe to the inf dataframe
-updated_us_data = pd.concat([grouped_data, grouped_data2], ignore_index=True)
+us_data = pd.concat([grouped_data, grouped_data2], ignore_index=True)
 
 # Append the new dataframe to the original dataframe
 #updated_us_data = pd.concat([grouped_data3, df_melted], ignore_index=True)
 
 # CSV
-updated_us_data.to_csv('United_States_cleaned.csv', index=False)
+#updated_us_data.to_csv('United_States_cleaned.csv', index=False)
 
 # Json
-updated_us_data.to_json('United_States_cleaned.json', orient='records')
+#updated_us_data.to_json('United_States_cleaned.json', orient='records')
+
+# Load population served vs total population coverage ratio data
+coverage_ratio_data = pd.read_csv('coverage_ratio.csv')
+
+#Adjust the new infections for all dates based on the coverage ratio
+us_data['Adjusted Value'] = us_data.apply(lambda row: row['Value'] / coverage_ratio_data.set_index('State').loc[row['Region'], 'Coverage Ratio'] if row['Measure'] == 'inf' else row['Value'], axis=1)
+
+# Drop the old value column
+us_data.drop('Value', axis=1, inplace=True)
+
+# Rename the adjusted value column to value
+us_data.rename(columns={'Adjusted Value': 'Value'}, inplace=True)
+
+# Get official data for each state
+confirmed_cases_data = pd.read_csv('covid_confirmed_usafacts.csv')
+
+statewise_new_cases = confirmed_cases_data.copy()
+date_columns = statewise_new_cases.columns[4:]  # Exclude non-date columns
+
+# Transpose the data to have dates as rows and the combination of counties and states as columns
+statewise_new_cases = statewise_new_cases.melt(id_vars=['countyFIPS', 'County Name', 'State', 'StateFIPS'], 
+                                               value_vars=date_columns, 
+                                               var_name='Date', 
+                                               value_name='New Cases')
+
+# Convert the date column to datetime format
+statewise_new_cases['Date'] = pd.to_datetime(statewise_new_cases['Date'], format='%Y-%m-%d')
+
+# Sort the data by state, county, and date
+statewise_new_cases = statewise_new_cases.sort_values(by=['State', 'County Name', 'Date'])
+
+# Reset the index
+statewise_new_cases = statewise_new_cases.reset_index(drop=True)
+
+# Aggregate the new cases by state
+statewise_new_cases = statewise_new_cases.groupby(['State','Date'])['New Cases'].sum().reset_index()
+
+# For each state transform cumulative to new cases in new column
+statewise_new_cases['New Cases'] = statewise_new_cases.groupby('State')['New Cases'].diff().fillna(0)
+
+# Don't allow negative values
+statewise_new_cases['New Cases'] = statewise_new_cases['New Cases'].clip(lower=0)
+
+# Apply 7-day rolling average to new cases
+statewise_new_cases['New Cases MA'] = statewise_new_cases.groupby('State')['New Cases'].rolling(7).mean().reset_index(0,drop=True)
+
+# Drop the New Cases column and rename the New Cases MA column to "Value"
+statewise_new_cases = statewise_new_cases.drop(columns=['New Cases']).rename(columns={'New Cases MA': 'Value'})
+
+# Add the "Measure" column set to "official"
+statewise_new_cases['Measure'] = 'official'
+
+# Rename the 'State' column to 'Region' to match the US_data_w_cov_ratio.csv structure
+statewise_new_cases = statewise_new_cases.rename(columns={'State': 'Region'})
+
+# Add the "Country" column set to "United_States"
+statewise_new_cases['Country'] = 'United_States'
+
+# Reorder the columns to match the US_data_w_cov_ratio.csv structure
+statewise_new_cases = statewise_new_cases[['Country', 'Region', 'Date', 'Measure', 'Value']]
+
+# Mapping of full state names to their abbreviations
+state_name_to_abbreviation = {
+    'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR', 'California': 'CA', 'Colorado': 'CO',
+    'Connecticut': 'CT', 'Delaware': 'DE', 'District of Columbia': 'DC', 'Florida': 'FL', 'Georgia': 'GA', 'Hawaii': 'HI', 'Idaho': 'ID',
+    'Illinois': 'IL', 'Indiana': 'IN', 'Iowa': 'IA', 'Kansas': 'KS', 'Kentucky': 'KY', 'Louisiana': 'LA',
+    'Maine': 'ME', 'Maryland': 'MD', 'Massachusetts': 'MA', 'Michigan': 'MI', 'Minnesota': 'MN', 'Mississippi': 'MS',
+    'Missouri': 'MO', 'Montana': 'MT', 'Nebraska': 'NE', 'Nevada': 'NV', 'New Hampshire': 'NH', 'New Jersey': 'NJ',
+    'New Mexico': 'NM', 'New York': 'NY', 'North Carolina': 'NC', 'North Dakota': 'ND', 'Ohio': 'OH', 'Oklahoma': 'OK',
+    'Oregon': 'OR', 'Pennsylvania': 'PA', 'Rhode Island': 'RI', 'South Carolina': 'SC', 'South Dakota': 'SD',
+    'Tennessee': 'TN', 'Texas': 'TX', 'Utah': 'UT', 'Vermont': 'VT', 'Virginia': 'VA', 'Washington': 'WA',
+    'West Virginia': 'WV', 'Wisconsin': 'WI', 'Wyoming': 'WY'
+}
+
+# Reverse the key-value pairs in the state_name_to_abbreviation dictionary
+abbreviation_to_state_name = {v: k for k, v in state_name_to_abbreviation.items()}
+
+# Update the state abbreviations in the dataframe to use full state names
+statewise_new_cases['Region'] = statewise_new_cases['Region'].replace(abbreviation_to_state_name)
+
+# Use only dates after 2021-06-01
+statewise_new_cases = statewise_new_cases[statewise_new_cases['Date'] > '2021-06-01']
+
+# Append the official_new_cases_data to us_data_with_ratio
+us_data_combined = pd.concat([us_data, statewise_new_cases], ignore_index=True)
+
+# Save to csv
+us_data_combined.to_csv('United_States_cleaned.csv', index=False)
+
+# Save to json
+us_data_combined.to_json('United_States_cleaned.json', orient='records')
