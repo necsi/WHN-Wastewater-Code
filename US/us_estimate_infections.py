@@ -169,7 +169,7 @@ infection_data = df_melted[df_melted["Measure"] == "inf"]
 # Join the two dataframes on the "Region" column from the first dataframe and the "rwzi_name" column from the second dataframe
 combined_data = infection_data.merge(sewershed_data, left_on="Region", right_on="key_plot_id", how="inner")
 
-# Group by "Date" and "province" and calculate the sum of "Value" multiplied by "fraction" for each group
+# Group by "Date" and "province" and calculate the sum of "Value" multiplied by "fraction" here assumed 1 for each group
 grouped_data = combined_data.groupby(["Date", "wwtp_jurisdiction"]).apply(lambda df: (df["Value"]).sum()).reset_index()
 
 # Rename the columns to match the original dataframe
@@ -191,17 +191,21 @@ combined_data2 = wastewater_data.merge(sewershed_data, left_on="Region", right_o
 # For each date and province, calculate the sum of wastewater values weighted by the sewershed's population serving the province
 grouped_waste = combined_data2.groupby(["Date", "wwtp_jurisdiction"]).apply(lambda df: (df["Value"] * df["population_served"]).sum()).reset_index()
 
-# For each date and province, calculate the sum of populations served by the sewersheds
-grouped_pop = combined_data2.groupby(["Date", "wwtp_jurisdiction"])["population_served"].sum().reset_index()
+# Add a column of 0s and 1s to combined_data2 to indicate whether the value is >0 or not
+combined_data2["Value>0"] = np.where(combined_data2["Value"] > 0, 1, 0)
+
+# For each date and state, calculate the sum of populations served by the sewersheds
+grouped_pop = combined_data2.groupby(["Date", "wwtp_jurisdiction"]).apply(lambda df: (df["population_served"] * df["Value>0"]).sum()).reset_index()
+#grouped_pop = combined_data2.groupby(["Date", "wwtp_jurisdiction"])["population_served"].sum().reset_index()
 
 # Join the two grouped dataframes on "Date" and state
 grouped_data2 = grouped_waste.merge(grouped_pop, on=["Date", "wwtp_jurisdiction"], how="inner")
 
 # Divide the total wastewater value by the total population for each province to get the per capita wastewater value
-grouped_data2["Value"] = grouped_data2[0] / grouped_data2["population_served"]
+grouped_data2["Value"] = grouped_data2["0_x"] / grouped_data2["0_y"]
 
 # Drop the unnecessary columns
-grouped_data2 = grouped_data2.drop(columns=[0, "population_served"])
+grouped_data2 = grouped_data2.drop(columns=["0_x", "0_y"])
 
 # Rename the columns to match the original dataframe
 grouped_data2.columns = ["Date", "Region", "Value"]
@@ -214,7 +218,7 @@ grouped_data2["Measure"] = "wastewater"
 grouped_data2 = grouped_data2[["Country", "Region", "Date", "Measure", "Value"]]
 
 # Append the new dataframe to the inf dataframe
-us_data = pd.concat([grouped_data, grouped_data2], ignore_index=True)
+#us_data = pd.concat([grouped_data, grouped_data2], ignore_index=True)
 
 # Append the new dataframe to the original dataframe
 #updated_us_data = pd.concat([grouped_data3, df_melted], ignore_index=True)
@@ -225,17 +229,41 @@ us_data = pd.concat([grouped_data, grouped_data2], ignore_index=True)
 # Json
 #updated_us_data.to_json('United_States_cleaned.json', orient='records')
 
-# Load population served vs total population coverage ratio data
-coverage_ratio_data = pd.read_csv('coverage_ratio.csv')
+# Define the census_population_2022 data
+census_population_2022 = {
+    "Alabama": 5074296, "Alaska": 733583, "Arizona": 7359197, "Arkansas": 3045637, 
+    "California": 39029342, "Colorado": 5839926, "Connecticut": 3626205, "Delaware": 1018396, 
+    "District of Columbia": 671803, "Florida": 22244823, "Georgia": 10912876, "Hawaii": 1440196, 
+    "Idaho": 1939033, "Illinois": 12582032, "Indiana": 6833037, "Iowa": 3200517, "Kansas": 2937150, 
+    "Kentucky": 4512310, "Louisiana": 4590241, "Maine": 1385340, "Maryland": 6164660, "Massachusetts": 6981974, 
+    "Michigan": 10034113, "Minnesota": 5717184, "Mississippi": 2940057, "Missouri": 6177957, "Montana": 1122867, 
+    "Nebraska": 1967923, "Nevada": 3177772, "New Hampshire": 1395231, "New Jersey": 9261699, "New Mexico": 2113344, 
+    "New York": 19677151, "North Carolina": 10698973, "North Dakota": 779261, "Ohio": 11756058, "Oklahoma": 4019800, 
+    "Oregon": 4240137, "Pennsylvania": 12972008, "Rhode Island": 1093734, "South Carolina": 5282634, 
+    "South Dakota": 909824, "Tennessee": 7051339, "Texas": 30029572, "Utah": 3380800, "Vermont": 647064, 
+    "Virginia": 8683619, "Washington": 7785786, "West Virginia": 1775156, "Wisconsin": 5892539, "Wyoming": 581381,
+    "New York City": 8335897 
+}
 
-#Adjust the new infections for all dates based on the coverage ratio
-us_data['Adjusted Value'] = us_data.apply(lambda row: row['Value'] / coverage_ratio_data.set_index('State').loc[row['Region'], 'Coverage Ratio'] if row['Measure'] == 'inf' else row['Value'], axis=1)
+# Calculate coverage ratio for each state on each date
+grouped_pop['coverage_ratio'] = grouped_pop.apply(lambda row: row[0] / census_population_2022.get(row['wwtp_jurisdiction'], 1), axis=1)
 
-# Drop the old value column
-us_data.drop('Value', axis=1, inplace=True)
 
-# Rename the adjusted value column to value
-us_data.rename(columns={'Adjusted Value': 'Value'}, inplace=True)
+# Merge the grouped_data_df with the coverage ratios from grouped_pop_df
+adjusted_data_df = pd.merge(grouped_data, grouped_pop[['Date', 'wwtp_jurisdiction', 'coverage_ratio']], 
+                            left_on=['Date', 'Region'], right_on=['Date', 'wwtp_jurisdiction'], how='left')
+
+# Adjust the "Value" column by dividing by the "coverage_ratio"
+adjusted_data_df['Adjusted Value'] = adjusted_data_df['Value'] / adjusted_data_df['coverage_ratio']
+
+# Drop the extra columns
+adjusted_data_df.drop(columns=['wwtp_jurisdiction', 'coverage_ratio', 'Value'], inplace=True)
+
+# Rename the "Adjusted Value" column to "Value"
+adjusted_data_df.rename(columns={'Adjusted Value': 'Value'}, inplace=True)
+
+# Append the dataframes for inf and wastewater
+us_data = pd.concat([adjusted_data_df, grouped_data2], ignore_index=True)
 
 # Get official data for each state
 confirmed_cases_data = pd.read_csv('covid_confirmed_usafacts.csv')
