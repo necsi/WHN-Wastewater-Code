@@ -16,8 +16,8 @@ ww.columns = ['Date', 'Code', 'Location', 'RNA_flow_per_100000']
 # Convert date to datetime
 ww['Date'] = pd.to_datetime(ww['Date'])
 
-# Using only dates after 2022-01-01
-ww = ww[ww['Date'] > '2022-01-01']
+# Using only dates after 2021-07-01 (previously 2022-01-01)
+ww = ww[ww['Date'] > '2021-07-01']
 
 # Get all unique Locations
 locations = ww['Location'].unique()
