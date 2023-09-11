@@ -153,17 +153,23 @@ combined_data2 = wastewater_data.merge(sewershed_data, left_on="Region", right_o
 # For each date and province, calculate the sum of wastewater values weighted by the sewershed's population serving the province
 grouped_waste = combined_data2.groupby(["Date", "province"]).apply(lambda df: (df["Value"] * df["pop_served"]).sum()).reset_index()
 
+# Add a column of 0s and 1s to combined_data2 to indicate whether the value is >0 or not
+combined_data2["Value>0"] = np.where(combined_data2["Value"] > 0, 1, 0)
+
 # For each date and province, calculate the sum of populations served by the sewersheds
-grouped_pop = combined_data2.groupby(["Date", "province"])["pop_served"].sum().reset_index()
+grouped_pop = combined_data2.groupby(["Date", "province"]).apply(lambda df: (df["pop_served"] * df["Value>0"]).sum()).reset_index()
+#grouped_pop = combined_data2.groupby(["Date", "province"])["pop_served"].sum().reset_index()
 
 # Join the two grouped dataframes on "Date" and "province"
 grouped_data2 = grouped_waste.merge(grouped_pop, on=["Date", "province"], how="inner")
 
 # Divide the total wastewater value by the total population for each province to get the per capita wastewater value
-grouped_data2["Value"] = grouped_data2[0] / grouped_data2["pop_served"]
+grouped_data2["Value"] = grouped_data2["0_x"] / grouped_data2["0_y"]
+#grouped_data2["Value"] = grouped_data2[0] / grouped_data2["pop_served"]
 
 # Drop the unnecessary columns
-grouped_data2 = grouped_data2.drop(columns=[0, "pop_served"])
+grouped_data2 = grouped_data2.drop(columns=["0_x", "0_y"])
+#grouped_data2 = grouped_data2.drop(columns=[0, "pop_served"])
 
 # Rename the columns to match the original dataframe
 grouped_data2.columns = ["Date", "Region", "Value"]
