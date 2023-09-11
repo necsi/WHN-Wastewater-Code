@@ -4,7 +4,7 @@
 name: Update Netherlands Wastewater data
 
 on:
-  #push:
+  push:
     #branches: [ main ]
   schedule:
     - cron: '16 09 * * *'
