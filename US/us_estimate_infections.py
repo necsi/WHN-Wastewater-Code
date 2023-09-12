@@ -65,6 +65,9 @@ ww = ww.merge(pop, how='left', on=['key_plot_id', 'Date'])
 ww['gc/capita/day'] = pd.to_numeric(ww['gc/capita/day'], errors='coerce')
 ww['Inhabitants'] = pd.to_numeric(ww['Inhabitants'], errors='coerce')
 
+# Convert negative values to 0
+ww['gc/capita/day'] = ww['gc/capita/day'].clip(lower=0)
+
 # Bring values to billion gene copies per day
 ww['mil_gc_per_capita_per_day'] = ww['gc/capita/day'] / 1000000
 ww['bil_gc_per_day'] = ww['mil_gc_per_capita_per_day'] * ww['Inhabitants']
