@@ -195,7 +195,8 @@ merged_nyc_inf_data.drop(columns=['wwtp_jurisdiction_nyc', '0_nyc'], inplace=Tru
 merged_nyc_inf_data.rename(columns={'0': 0}, inplace=True)
 
 # Append this updated NY data back to the original dataframe
-grouped_data = grouped_data[grouped_data['wwtp_jurisdiction'] != 'New York'].append(merged_nyc_inf_data, ignore_index=True)
+grouped_data = pd.concat([grouped_data[grouped_data['wwtp_jurisdiction'] != 'New York'], merged_nyc_inf_data], ignore_index=True)
+#grouped_data = grouped_data[grouped_data['wwtp_jurisdiction'] != 'New York'].append(merged_nyc_inf_data, ignore_index=True)
 
 # Rename the columns to match the original dataframe
 grouped_data.columns = ["Date", "Region", "Value"]
@@ -237,7 +238,8 @@ merged_nyc_data.drop(columns=['wwtp_jurisdiction_nyc', '0_nyc'], inplace=True)
 merged_nyc_data.rename(columns={'0': 0}, inplace=True)
 
 # Append this updated NY data back to the original dataframe
-grouped_waste = grouped_waste[grouped_waste['wwtp_jurisdiction'] != 'New York'].append(merged_nyc_data, ignore_index=True)
+grouped_waste = pd.concat([grouped_waste[grouped_waste['wwtp_jurisdiction'] != 'New York'], merged_nyc_data], ignore_index=True)
+#grouped_waste = grouped_waste[grouped_waste['wwtp_jurisdiction'] != 'New York'].append(merged_nyc_data, ignore_index=True)
 
 # Add a column of 0s and 1s to combined_data2 to indicate whether the value is >0 or not
 combined_data2["Value>0"] = np.where(combined_data2["Value"] > 0, 1, 0)
@@ -267,7 +269,8 @@ merged_nyc_pop_data.drop(columns=['wwtp_jurisdiction_nyc', '0_nyc'], inplace=Tru
 merged_nyc_pop_data.rename(columns={'0': 0}, inplace=True)
 
 # Append this updated NY data back to the original dataframe
-grouped_pop = grouped_pop[grouped_pop['wwtp_jurisdiction'] != 'New York'].append(merged_nyc_pop_data, ignore_index=True)
+grouped_pop = pd.concat([grouped_pop[grouped_pop['wwtp_jurisdiction'] != 'New York'], merged_nyc_pop_data], ignore_index=True)
+#grouped_pop = grouped_pop[grouped_pop['wwtp_jurisdiction'] != 'New York'].append(merged_nyc_pop_data, ignore_index=True)
 
 # Join the two grouped dataframes on "Date" and state
 grouped_data2 = grouped_waste.merge(grouped_pop, on=["Date", "wwtp_jurisdiction"], how="inner")
