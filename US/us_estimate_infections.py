@@ -175,6 +175,28 @@ combined_data = infection_data.merge(sewershed_data, left_on="Region", right_on=
 # Group by "Date" and "province" and calculate the sum of "Value" multiplied by "fraction" here assumed 1 for each group
 grouped_data = combined_data.groupby(["Date", "wwtp_jurisdiction"]).apply(lambda df: (df["Value"]).sum()).reset_index()
 
+# Extract NYC data
+nyc_infdata = grouped_data[grouped_data['wwtp_jurisdiction'] == 'New York City']
+
+# Merge NYC data with NY data based on Date
+merged_nyc_inf_data = pd.merge(grouped_data[grouped_data['wwtp_jurisdiction'] == 'New York'], 
+                       nyc_infdata, 
+                       on='Date', 
+                       how='left', 
+                       suffixes=('', '_nyc'))
+
+# Add the wastewater data of NYC to NY for each date
+merged_nyc_inf_data['0'] += merged_nyc_inf_data['0_nyc'].fillna(0)
+
+# Drop the unnecessary columns
+merged_nyc_inf_data.drop(columns=['wwtp_jurisdiction_nyc', '0_nyc'], inplace=True)
+
+# Change column name from '0' to 0
+merged_nyc_inf_data.rename(columns={'0': 0}, inplace=True)
+
+# Append this updated NY data back to the original dataframe
+grouped_data = grouped_data[grouped_data['wwtp_jurisdiction'] != 'New York'].append(merged_nyc_inf_data, ignore_index=True)
+
 # Rename the columns to match the original dataframe
 grouped_data.columns = ["Date", "Region", "Value"]
 
@@ -194,12 +216,58 @@ combined_data2 = wastewater_data.merge(sewershed_data, left_on="Region", right_o
 # For each date and province, calculate the sum of wastewater values weighted by the sewershed's population serving the province
 grouped_waste = combined_data2.groupby(["Date", "wwtp_jurisdiction"]).apply(lambda df: (df["Value"] * df["population_served"]).sum()).reset_index()
 
+## Make sure to add New York City values for each date to New York State values
+# Extract NYC data using the correct column name
+nyc_wwdata = grouped_waste[grouped_waste['wwtp_jurisdiction'] == 'New York City']
+
+# Merge NYC data with NY data based on Date
+merged_nyc_data = pd.merge(grouped_waste[grouped_waste['wwtp_jurisdiction'] == 'New York'], 
+                       nyc_wwdata, 
+                       on='Date', 
+                       how='left', 
+                       suffixes=('', '_nyc'))
+
+# Add the wastewater data of NYC to NY for each date
+merged_nyc_data['0'] += merged_nyc_data['0_nyc'].fillna(0)
+
+# Drop the unnecessary columns
+merged_nyc_data.drop(columns=['wwtp_jurisdiction_nyc', '0_nyc'], inplace=True)
+
+# Change column name from '0' to 0
+merged_nyc_data.rename(columns={'0': 0}, inplace=True)
+
+# Append this updated NY data back to the original dataframe
+grouped_waste = grouped_waste[grouped_waste['wwtp_jurisdiction'] != 'New York'].append(merged_nyc_data, ignore_index=True)
+
 # Add a column of 0s and 1s to combined_data2 to indicate whether the value is >0 or not
 combined_data2["Value>0"] = np.where(combined_data2["Value"] > 0, 1, 0)
 
 # For each date and state, calculate the sum of populations served by the sewersheds
 grouped_pop = combined_data2.groupby(["Date", "wwtp_jurisdiction"]).apply(lambda df: (df["population_served"] * df["Value>0"]).sum()).reset_index()
 #grouped_pop = combined_data2.groupby(["Date", "wwtp_jurisdiction"])["population_served"].sum().reset_index()
+
+## Make sure to add New York City values for each date to New York State values
+# Extract NYC data using the correct column name
+nyc_popdata = grouped_pop[grouped_pop['wwtp_jurisdiction'] == 'New York City']
+
+# Merge NYC data with NY data based on Date
+merged_nyc_pop_data = pd.merge(grouped_pop[grouped_pop['wwtp_jurisdiction'] == 'New York'], 
+                       nyc_popdata, 
+                       on='Date', 
+                       how='left', 
+                       suffixes=('', '_nyc'))
+
+# Add the wastewater data of NYC to NY for each date
+merged_nyc_pop_data['0'] += merged_nyc_pop_data['0_nyc'].fillna(0)
+
+# Drop the unnecessary columns
+merged_nyc_pop_data.drop(columns=['wwtp_jurisdiction_nyc', '0_nyc'], inplace=True)
+
+# Change column name from '0' to 0
+merged_nyc_pop_data.rename(columns={'0': 0}, inplace=True)
+
+# Append this updated NY data back to the original dataframe
+grouped_pop = grouped_pop[grouped_pop['wwtp_jurisdiction'] != 'New York'].append(merged_nyc_pop_data, ignore_index=True)
 
 # Join the two grouped dataframes on "Date" and state
 grouped_data2 = grouped_waste.merge(grouped_pop, on=["Date", "wwtp_jurisdiction"], how="inner")
