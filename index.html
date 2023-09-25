@@ -97,7 +97,14 @@
                   });
                   myChart.setOption({
                       tooltip: {
-                          trigger: 'axis'
+                          trigger: 'axis',
+                          formatter: function(params) {
+                              var result = params[0].axisValueLabel + '<br>';
+                              params.forEach(function(item) {
+                                  result += item.marker + ' ' + item.seriesName + ': ' + Math.round(item.data) + '<br>';
+                              });
+                              return result;
+                          }
                       },
                       legend: {
                             data: legends
