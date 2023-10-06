@@ -31,6 +31,9 @@ p_Kelowna = 130000
 p_Penticton = 37000
 p_Interior_Health = p_Kamloops + p_Kelowna + p_Penticton
 
+# Northern Health
+p_NH = 76708
+
 
 # Transform into million gc / capita / day
 ww['Annacis_mil_gc/cap'] = ww['Annacis'] *1000 / p_Annacis
@@ -46,6 +49,8 @@ ww['Comox Valley_mil_gc/cap'] = ww['Comox Valley'] *1000 / p_Comox_Valley
 ww['Kamloops_mil_gc/cap'] = ww['Kamloops'] *1000 / p_Kamloops
 ww['Kelowna_mil_gc/cap'] = ww['Kelowna'] *1000 / p_Kelowna
 ww['Penticton_mil_gc/cap'] = ww['Penticton'] *1000 / p_Penticton
+
+ww['NH_mil_gc/cap'] = ww['Prince George'] *1000 / p_NH
 
 
 # Make new columns with 7 day rolling average
@@ -78,12 +83,15 @@ ww['Kamloops_3day'] = (ww['Kamloops_mil_gc/cap'].shift(1) + ww['Kamloops_mil_gc/
 ww['Kelowna_3day'] = (ww['Kelowna_mil_gc/cap'].shift(1) + ww['Kelowna_mil_gc/cap'] + ww['Kelowna_mil_gc/cap'].shift(-1)) / 3
 ww['Penticton_3day'] = (ww['Penticton_mil_gc/cap'].shift(1) + ww['Penticton_mil_gc/cap'] + ww['Penticton_mil_gc/cap'].shift(-1)) / 3
 
+ww['NH_3day'] = (ww['NH_mil_gc/cap'].shift(1) + ww['NH_mil_gc/cap'] + ww['NH_mil_gc/cap'].shift(-1)) / 3
+
 
 
 # Make new columns with weighted average of health authorities
 ww['Metro_Vancouver_3day'] = (ww['Annacis_3day'] * p_Annacis + ww['Nw. Langley_3day'] * p_Nw_Langley + ww['Iona_3day'] * p_Iona + ww['Lion\'s Gate_3day'] * p_Lions_Gate + ww['Lulu_3day'] * p_Lulu) / p_Metro_Vancouver
 ww['Island_Health_3day'] = (ww['Victoria_3day'] * p_Victoria + ww['Nanaimo_3day'] * p_Nanaimo + ww['Comox Valley_3day'] * p_Comox_Valley) / p_Island_Health
 ww['Interior_Health_3day'] = (ww['Kamloops_3day'] * p_Kamloops + ww['Kelowna_3day'] * p_Kelowna + ww['Penticton_3day'] * p_Penticton) / p_Interior_Health
+ww['Northern_Health_3day'] = ww['NH_3day']
 
 
 # Estimate new cases
@@ -95,6 +103,8 @@ ww['VIHA'] = ww['Victoria'] + ww['Nanaimo'] + ww['Comox Valley']
 
 ww['IH'] = ww['Kamloops'] + ww['Kelowna'] + ww['Penticton']
 
+ww['NH'] = ww['Prince George']
+
 
 # Make list of 14 first entries in gc in billions column of shedding
 shedding_list = shedding['gc in billions'].tolist()[:14]
@@ -104,6 +114,7 @@ ww['VCH_new_inf_total'] = 0
 ww['FH_new_inf_total'] = 0
 ww['VIHA_new_inf_total'] = 0
 ww['IH_new_inf_total'] = 0
+ww['NH_new_inf_total'] = 0
 
 
 # Fill in the rest of the new infections columns
@@ -115,6 +126,9 @@ for i in range(231, len(ww)):
     ww.iloc[i,ww.columns.get_loc('VIHA_new_inf_total')] = (ww.iloc[i,ww.columns.get_loc('VIHA')]- ((ww.iloc[i-1,ww.columns.get_loc('VIHA_new_inf_total')]*shedding_list[1])+(ww.iloc[i-2,ww.columns.get_loc('VIHA_new_inf_total')]*shedding_list[2])+(ww.iloc[i-3,ww.columns.get_loc('VIHA_new_inf_total')]*shedding_list[3])+(ww.iloc[i-4,ww.columns.get_loc('VIHA_new_inf_total')]*shedding_list[4])+(ww.iloc[i-5,ww.columns.get_loc('VIHA_new_inf_total')]*shedding_list[5])+(ww.iloc[i-6,ww.columns.get_loc('VIHA_new_inf_total')]*shedding_list[6])+(ww.iloc[i-7,ww.columns.get_loc('VIHA_new_inf_total')]*shedding_list[7])+(ww.iloc[i-8,ww.columns.get_loc('VIHA_new_inf_total')]*shedding_list[8])+(ww.iloc[i-9,ww.columns.get_loc('VIHA_new_inf_total')]*shedding_list[9])+(ww.iloc[i-10,ww.columns.get_loc('VIHA_new_inf_total')]*shedding_list[10])+(ww.iloc[i-11,ww.columns.get_loc('VIHA_new_inf_total')]*shedding_list[11])+(ww.iloc[i-12,ww.columns.get_loc('VIHA_new_inf_total')]*shedding_list[12])+(ww.iloc[i-13,ww.columns.get_loc('VIHA_new_inf_total')]*shedding_list[13])))/shedding_list[0]
 for i in range(204, len(ww)):
     ww.iloc[i,ww.columns.get_loc('IH_new_inf_total')] = (ww.iloc[i,ww.columns.get_loc('IH')]- ((ww.iloc[i-1,ww.columns.get_loc('IH_new_inf_total')]*shedding_list[1])+(ww.iloc[i-2,ww.columns.get_loc('IH_new_inf_total')]*shedding_list[2])+(ww.iloc[i-3,ww.columns.get_loc('IH_new_inf_total')]*shedding_list[3])+(ww.iloc[i-4,ww.columns.get_loc('IH_new_inf_total')]*shedding_list[4])+(ww.iloc[i-5,ww.columns.get_loc('IH_new_inf_total')]*shedding_list[5])+(ww.iloc[i-6,ww.columns.get_loc('IH_new_inf_total')]*shedding_list[6])+(ww.iloc[i-7,ww.columns.get_loc('IH_new_inf_total')]*shedding_list[7])+(ww.iloc[i-8,ww.columns.get_loc('IH_new_inf_total')]*shedding_list[8])+(ww.iloc[i-9,ww.columns.get_loc('IH_new_inf_total')]*shedding_list[9])+(ww.iloc[i-10,ww.columns.get_loc('IH_new_inf_total')]*shedding_list[10])+(ww.iloc[i-11,ww.columns.get_loc('IH_new_inf_total')]*shedding_list[11])+(ww.iloc[i-12,ww.columns.get_loc('IH_new_inf_total')]*shedding_list[12])+(ww.iloc[i-13,ww.columns.get_loc('IH_new_inf_total')]*shedding_list[13])))/shedding_list[0]
+
+for i in range(408, len(ww)):
+    ww.iloc[i,ww.columns.get_loc('NH_new_inf_total')] = (ww.iloc[i,ww.columns.get_loc('NH')]- ((ww.iloc[i-1,ww.columns.get_loc('NH_new_inf_total')]*shedding_list[1])+(ww.iloc[i-2,ww.columns.get_loc('NH_new_inf_total')]*shedding_list[2])+(ww.iloc[i-3,ww.columns.get_loc('NH_new_inf_total')]*shedding_list[3])+(ww.iloc[i-4,ww.columns.get_loc('NH_new_inf_total')]*shedding_list[4])+(ww.iloc[i-5,ww.columns.get_loc('NH_new_inf_total')]*shedding_list[5])+(ww.iloc[i-6,ww.columns.get_loc('NH_new_inf_total')]*shedding_list[6])+(ww.iloc[i-7,ww.columns.get_loc('NH_new_inf_total')]*shedding_list[7])+(ww.iloc[i-8,ww.columns.get_loc('NH_new_inf_total')]*shedding_list[8])+(ww.iloc[i-9,ww.columns.get_loc('NH_new_inf_total')]*shedding_list[9])+(ww.iloc[i-10,ww.columns.get_loc('NH_new_inf_total')]*shedding_list[10])+(ww.iloc[i-11,ww.columns.get_loc('NH_new_inf_total')]*shedding_list[11])+(ww.iloc[i-12,ww.columns.get_loc('NH_new_inf_total')]*shedding_list[12])+(ww.iloc[i-13,ww.columns.get_loc('NH_new_inf_total')]*shedding_list[13])))/shedding_list[0]
     
     
 # Correct for whole Health Authority population
@@ -122,11 +136,14 @@ p_covered_VCH = 0.88141
 p_covered_FH = 0.67549
 p_covered_VIHA = 0.51834
 p_covered_IH = 0.32467
+p_covered_NH = 0.25357
 
 ww['VCH_new_inf'] = ww['VCH_new_inf_total'] / p_covered_VCH
 ww['FH_new_inf'] = ww['FH_new_inf_total'] / p_covered_FH
 ww['VIHA_new_inf'] = ww['VIHA_new_inf_total'] / p_covered_VIHA
 ww['IH_new_inf'] = ww['IH_new_inf_total'] / p_covered_IH
+ww['NH_new_inf'] = ww['NH_new_inf_total'] / p_covered_NH
+
 
 
 # Make new column with 3-day average of new infections by taking the last day, the present day and the next day
@@ -134,6 +151,7 @@ ww['VCH_new_inf_3day'] = (ww['VCH_new_inf'].shift(1) + ww['VCH_new_inf'] + ww['V
 ww['FH_new_inf_3day'] = (ww['FH_new_inf'].shift(1) + ww['FH_new_inf'] + ww['FH_new_inf'].shift(-1)) / 3
 ww['VIHA_new_inf_3day'] = (ww['VIHA_new_inf'].shift(1) + ww['VIHA_new_inf'] + ww['VIHA_new_inf'].shift(-1)) / 3
 ww['IH_new_inf_3day'] = (ww['IH_new_inf'].shift(1) + ww['IH_new_inf'] + ww['IH_new_inf'].shift(-1)) / 3
+ww['NH_new_inf_3day'] = (ww['NH_new_inf'].shift(1) + ww['NH_new_inf'] + ww['NH_new_inf'].shift(-1)) / 3
 
 
 # Save 
@@ -148,10 +166,10 @@ df['MetroVancouver_inf'] = df['VCH_new_inf_3day'] + df['FH_new_inf_3day']
 df = df.reset_index()
 
 # Select the columns we need
-df = df[['Date', 'Metro_Vancouver_3day', 'Island_Health_3day', 'Interior_Health_3day', 'MetroVancouver_inf', 'VIHA_new_inf_3day', 'IH_new_inf_3day']]
+df = df[['Date', 'Metro_Vancouver_3day', 'Island_Health_3day', 'Interior_Health_3day', 'Northern_Health_3day','MetroVancouver_inf', 'VIHA_new_inf_3day', 'IH_new_inf_3day', 'NH_new_inf_3day']]
 
 # Rename the columns
-df.columns = ['Date', 'MetroVancouver_wastewater', 'IslandHealth_wastewater', 'InteriorHealth_wastewater', 'MetroVancouver_inf', 'IslandHealth_inf', 'InteriorHealth_inf']
+df.columns = ['Date', 'MetroVancouver_wastewater', 'IslandHealth_wastewater', 'InteriorHealth_wastewater', 'NorthernHealth_wastewater', 'MetroVancouver_inf', 'IslandHealth_inf', 'InteriorHealth_inf', 'NorthernHealth_inf']
 
 # "Melt" the data so each row is a unique date-region combination
 df_melted = df.melt(id_vars='Date', var_name='Region_and_Measure', value_name='Value')
