@@ -72,15 +72,15 @@
                       switch (measure) {
                           case 'wastewater':
                               label = 'Wastewater';
-                              yAxisIndex = 1;
+                              yAxisIndex = 0;
                               break;
                           case 'inf':
                               label = 'Estimated Infections';
-                              yAxisIndex = 0;
+                              yAxisIndex = 1;
                               break;
                           case 'official':
                               label = 'Official Infections';
-                              yAxisIndex = 0;
+                              yAxisIndex = 1;
                               break;
                       }
                       labels = [...new Set([...labels, ...timeData])].sort();
@@ -127,10 +127,10 @@
                       },
                       yAxis: [{
                           type: 'value',
-                          name: 'New Infections'
+                          name: 'Wastewater (in million gc/capita/day)'
                       }, {
                           type: 'value',
-                          name: 'Wastewater (in million gc/capita/day)'
+                          name: 'New Infections'
                       }],
                       series: series
                   }, true);
