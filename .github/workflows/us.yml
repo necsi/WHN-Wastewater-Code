@@ -36,8 +36,8 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Process Data
       run: |
-        python US/us_estimate_infections.py
-        python us/wwUSBiobot.py
+       # python US/us_estimate_infections.py
+        python US/wwUSBiobot.py
     #- uses: actions/checkout@v3
     #- run: |
     #      git config user.name github-actions
