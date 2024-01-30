@@ -4,8 +4,8 @@
 name: Update US Wastewater data
 
 on:
-  #push:
-    #branches: [ main ]
+  push:
+    branches: [ main ]
   schedule:
     - cron: '06 09 * * *'
 
@@ -38,6 +38,7 @@ jobs:
       run: |
         python US/us_estimate_infections.py
         python US/wwUSBiobot.py
+        python US/wwUSbiobot_c.py
     #- uses: actions/checkout@v3
     #- run: |
     #      git config user.name github-actions
